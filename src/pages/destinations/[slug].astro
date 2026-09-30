@@ -1,0 +1,214 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { DESTINATIONS, type Destination } from '../../data/destinations';
+import { SAFARI_PACKAGES } from '../../data/safaris';
+
+export function getStaticPaths() {
+  return DESTINATIONS.map((dest) => ({
+    params: { slug: dest.slug },
+    props: { dest }
+  }));
+}
+
+interface Props {
+  dest: Destination;
+}
+
+const { dest } = Astro.props;
+
+const matchingSafaris = SAFARI_PACKAGES.filter((s) => 
+  s.destinations.some(d => d.toLowerCase().includes(dest.name.toLowerCase().split(' ')[0])) ||
+  (dest.country === "Kenya" && s.destinations.some(d => d.includes("Mara") || d.includes("Amboseli"))) ||
+  (dest.country === "Tanzania" && s.destinations.some(d => d.includes("Serengeti") || d.includes("Tanzania"))) ||
+  (dest.country === "Uganda" && (s.category === "big-five" || s.category === "luxury"))
+).slice(0, 2);
+---
+
+<Layout
+  title={`${dest.name} Safari Guide | Bliss Path Tours & Safaris`}
+  description={dest.overview.substring(0, 160)}
+>
+  <Header />
+
+  <main class="bg-[#FDFBF7] min-h-screen">
+    
+    <!-- Hero Banner -->
+    <div class="relative h-[60vh] min-h-[420px] flex items-end overflow-hidden">
+      <img
+        src={dest.heroImage}
+        alt={dest.name}
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-[#121814] via-[#121814]/50 to-black/30"></div>
+
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 w-full text-white">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFAE19] text-[#094423] text-xs font-bold uppercase tracking-wider mb-3">
+          <span>{dest.country}</span>
+        </div>
+        <h1 class="text-3xl sm:text-6xl font-bold font-serif-luxury tracking-tight leading-tight">
+          {dest.name}
+        </h1>
+        <p class="mt-2 text-base sm:text-xl text-slate-200 font-light max-w-2xl">
+          {dest.tagline}
+        </p>
+      </div>
+    </div>
+
+    <!-- Quick Attributes Bar -->
+    <div class="bg-white border-b border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs sm:text-sm">
+          <div>
+            <span class="block text-[11px] uppercase tracking-wider text-gray-400 font-bold">Country</span>
+            <span class="font-bold text-[#1E2621]">{dest.country}</span>
+          </div>
+          <div>
+            <span class="block text-[11px] uppercase tracking-wider text-gray-400 font-bold">Recommended Stay</span>
+            <span class="font-bold text-[#1E2621]">{dest.recommendedDays}</span>
+          </div>
+          <div>
+            <span class="block text-[11px] uppercase tracking-wider text-gray-400 font-bold">Best Season</span>
+            <span class="font-bold text-[#0F6B38] truncate block">{dest.bestTimeToVisit.split('|')[0]}</span>
+          </div>
+          <div>
+            <span class="block text-[11px] uppercase tracking-wider text-gray-400 font-bold">Top Sightings</span>
+            <span class="font-bold text-[#E86A17] truncate block">{dest.wildlifeHighlights.slice(0, 3).join(", ")}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content & Safari Packages -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        <!-- Left: Destination Intel -->
+        <div class="lg:col-span-8 space-y-10">
+          
+          <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
+            <h2 class="text-2xl font-bold text-[#1E2621] font-serif-luxury mb-4">
+              About {dest.name}
+            </h2>
+            <p class="text-gray-700 leading-relaxed text-base sm:text-lg font-light">
+              {dest.overview}
+            </p>
+          </div>
+
+          <!-- Wildlife Highlights -->
+          <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
+            <h2 class="text-2xl font-bold text-[#1E2621] font-serif-luxury mb-4">
+              Wildlife & Iconic Species
+            </h2>
+            <div class="flex flex-wrap gap-2.5">
+              {dest.wildlifeHighlights.map((w) => (
+                <span class="px-4 py-2 rounded-xl bg-[#FDFBF7] text-[#0F6B38] font-bold text-sm border border-gray-200/80 shadow-2xs">
+                  🐾 {w}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Key Attractions -->
+          <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
+            <h2 class="text-2xl font-bold text-[#1E2621] font-serif-luxury mb-4">
+              Key Sights & Must-Do Activities
+            </h2>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {dest.keyAttractions.map((attr) => (
+                <li class="flex items-start gap-2.5 p-3 rounded-xl bg-gray-50 border border-gray-100 text-xs sm:text-sm font-medium text-gray-800">
+                  <span class="text-[#FFAE19] font-bold">★</span>
+                  <span>{attr}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Associated Safaris -->
+          <div>
+            <h2 class="text-2xl font-bold text-[#1E2621] font-serif-luxury mb-6">
+              Featured Safaris Visiting {dest.name}
+            </h2>
+            <div class="space-y-6">
+              {matchingSafaris.map((pkg) => (
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-gray-100 flex flex-col sm:flex-row">
+                  <div class="sm:w-2/5 h-56 sm:h-auto relative">
+                    <img src={pkg.mainImage} alt={pkg.title} class="w-full h-full object-cover" />
+                    <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold bg-[#E86A17] text-white">
+                      ⏱ {pkg.duration}
+                    </span>
+                  </div>
+                  <div class="sm:w-3/5 p-6 flex flex-col justify-between">
+                    <div>
+                      <h3 class="text-xl font-bold text-[#1E2621] mb-2">
+                        {pkg.title}
+                      </h3>
+                      <p class="text-xs sm:text-sm text-gray-600 line-clamp-2">
+                        {pkg.overview}
+                      </p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+                      <div>
+                        <span class="text-[11px] uppercase text-gray-400 font-bold block">From</span>
+                        <span class="text-xl font-black text-[#0F6B38]">${pkg.price}</span>
+                      </div>
+                      <a
+                        href={`/safaris/${pkg.slug}`}
+                        class="px-5 py-2.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#E86A17] to-[#FFAE19] hover:brightness-105 transition-all shadow-sm"
+                      >
+                        View Full Route →
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Inquiry & Consultation Widget -->
+        <div class="lg:col-span-4 sticky top-24 space-y-6">
+          <div class="bg-gradient-to-br from-[#094423] to-[#0F6B38] rounded-3xl p-8 text-white shadow-xl">
+            <span class="text-xs uppercase tracking-wider text-[#FFAE19] font-bold">Safari Consultation</span>
+            <h3 class="text-2xl font-bold font-serif-luxury mt-1">
+              Plan Your {dest.name} Safari
+            </h3>
+            <p class="text-xs text-slate-200 mt-2 font-light leading-relaxed">
+              Our native Kenyan safari directors will build an itinerary matching your preferred lodge style, duration, and wildlife priorities.
+            </p>
+
+            <div class="mt-6 space-y-3">
+              <a
+                href={`https://wa.me/254700000000?text=${encodeURIComponent(`Hello Bliss Path, I want to plan a safari to ${dest.name}. Could you send me lodge options and pricing?`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full py-3.5 px-4 rounded-full bg-[#25D366] text-white font-bold text-sm shadow-md hover:brightness-105 flex items-center justify-center gap-2"
+              >
+                <span>WhatsApp Safari Guide</span>
+              </a>
+
+              <a
+                href="/#inquiry"
+                class="w-full py-3.5 px-4 rounded-full bg-white text-[#094423] font-bold text-sm shadow-md hover:bg-[#FFAE19] transition-all flex items-center justify-center"
+              >
+                <span>Customize This Trip (Free)</span>
+              </a>
+            </div>
+
+            <div class="mt-6 pt-5 border-t border-white/15 text-xs text-slate-300 space-y-2">
+              <div>✓ Guaranteed 4x4 Land Cruiser window seat</div>
+              <div>✓ No obligation 24-hr custom itinerary</div>
+              <div>✓ Direct local Kenyan operator pricing</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <Footer />
+</Layout>

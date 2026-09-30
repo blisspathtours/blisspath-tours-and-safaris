@@ -1,0 +1,21 @@
+{
+  "name": "bliss-path-tours-and-safaris",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Bliss Path Tours & Safaris Official Website",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "node ./node_modules/astro/bin/astro.mjs dev",
+    "build": "node ./node_modules/astro/bin/astro.mjs build",
+    "preview": "node ./node_modules/astro/bin/astro.mjs preview",
+    "astro": "node ./node_modules/astro/bin/astro.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@tailwindcss/vite": "^4.1.3",
+    "astro": "^7.3.5",
+    "tailwindcss": "^4.1.3"
+  }
+}

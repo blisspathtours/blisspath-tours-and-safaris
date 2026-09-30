@@ -1,0 +1,342 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SAFARI_PACKAGES } from '../../data/safaris';
+---
+
+<Layout
+  title="All Safari Packages & Tours | Bliss Path Tours & Safaris"
+  description="Explore our full collection of bespoke Kenya, Tanzania, Uganda, and Cross-Border safari packages. Filter by Great Migration, Big Five, Gorilla Trekking, Mount Kilimanjaro, and Bush to Beach."
+>
+  <Header />
+
+  <main class="bg-[#FDFBF7] min-h-screen">
+    
+    <!-- Hero Banner -->
+    <div class="relative py-20 bg-gradient-to-r from-[#094423] via-[#0F6B38] to-[#121814] text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <span class="inline-block px-3 py-1 rounded-full bg-[#FFAE19] text-[#094423] text-xs font-bold uppercase tracking-wider mb-4">
+          Curated Expeditions
+        </span>
+        <h1 class="text-2xl sm:text-5xl lg:text-6xl font-bold font-serif-luxury tracking-tight leading-tight px-2">
+          Safari Packages & Itineraries
+        </h1>
+        <p class="mt-3 text-xs sm:text-lg text-slate-200 font-light max-w-2xl mx-auto leading-relaxed px-2">
+          From Great Migration river crossings and wild gorilla treks to Mount Kilimanjaro summit climbs and Zanzibar beach escapes. All safaris are 100% customizable.
+        </p>
+      </div>
+    </div>
+
+    <!-- Interactive Search & Filter Controls -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-gray-100">
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 items-center">
+          
+          <!-- Text Search -->
+          <div>
+            <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">Keywords</label>
+            <div class="relative">
+              <input
+                id="search-input"
+                type="text"
+                placeholder="e.g. Mara, Gorilla, Rhino..."
+                class="w-full pl-9 pr-3 py-2.5 rounded-xl border border-gray-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50"
+              />
+              <svg class="w-4 h-4 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Country Filter -->
+          <div>
+            <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">Destination Country</label>
+            <select id="country-select" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50 cursor-pointer">
+              <option value="all">All East Africa</option>
+              <option value="kenya">Kenya</option>
+              <option value="tanzania">Tanzania</option>
+              <option value="uganda">Uganda</option>
+              <option value="cross-border">Cross-Border Circuits</option>
+            </select>
+          </div>
+
+          <!-- Safari Style -->
+          <div>
+            <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">Safari Style</label>
+            <select id="style-select" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50 cursor-pointer">
+              <option value="all">All Styles</option>
+              <option value="migration">Great Migration</option>
+              <option value="big-five">Big Five & Wildlife</option>
+              <option value="luxury">Luxury & Gorilla Treks</option>
+              <option value="bush-beach">Bush to Beach</option>
+              <option value="trekking">Mountain Climbing (Kilimanjaro)</option>
+              <option value="day-tours">Day Excursions</option>
+            </select>
+          </div>
+
+          <!-- Duration -->
+          <div>
+            <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">Duration</label>
+            <select id="duration-select" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50 cursor-pointer">
+              <option value="all">Any Duration</option>
+              <option value="1">1 Day</option>
+              <option value="2-4">2 – 4 Days</option>
+              <option value="5-7">5 – 7 Days</option>
+              <option value="8+">8+ Days (Epic Circuits)</option>
+            </select>
+          </div>
+
+          <!-- Sort by -->
+          <div>
+            <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">Sort By</label>
+            <select id="sort-select" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50 cursor-pointer">
+              <option value="recommended">Recommended</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="duration-asc">Duration: Short to Long</option>
+              <option value="duration-desc">Duration: Long to Short</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Filter Count & Quick Reset -->
+        <div class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+          <span id="results-count" class="font-semibold text-gray-700">Showing {SAFARI_PACKAGES.length} Safaris</span>
+          <button id="reset-filters" type="button" class="text-[#0F6B38] hover:text-[#E86A17] font-bold hover:underline cursor-pointer">
+            Reset Filters
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Safari Grid Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div id="safari-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {SAFARI_PACKAGES.map((pkg) => (
+          <div
+            class="safari-item bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 flex flex-col justify-between group"
+            data-title={pkg.title.toLowerCase()}
+            data-destinations={pkg.destinations.join(" ").toLowerCase()}
+            data-category={pkg.category}
+            data-country={pkg.country.toLowerCase()}
+            data-days={pkg.durationDays}
+            data-price={pkg.price}
+          >
+            <!-- Card Image & Badges -->
+            <div class="relative h-64 overflow-hidden">
+              <a href={`/safaris/${pkg.slug}`} class="block w-full h-full">
+                <img
+                  src={pkg.mainImage}
+                  alt={pkg.title}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20"></div>
+              </a>
+
+              <div class="absolute top-4 left-4 flex gap-1.5">
+                <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-[#E86A17] text-white shadow-md">
+                  {pkg.badge}
+                </span>
+                <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-[#0F6B38] text-white shadow-md">
+                  {pkg.country}
+                </span>
+              </div>
+
+              <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-gray-800 flex items-center gap-1 shadow-sm">
+                <span class="text-[#FFAE19]">★</span>
+                <span>{pkg.rating}</span>
+                <span class="text-gray-400 font-normal">({pkg.reviewsCount})</span>
+              </div>
+
+              <div class="absolute bottom-4 left-4 right-4">
+                <span class="inline-block px-2.5 py-0.5 rounded-md bg-[#0F6B38] text-white text-xs font-semibold mb-1">
+                  ⏱ {pkg.duration}
+                </span>
+                <div class="text-xs text-slate-200 flex items-center gap-1 truncate">
+                  <svg class="w-3.5 h-3.5 text-[#FFAE19] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  </svg>
+                  <span>{pkg.destinations.join(" • ")}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Content Body -->
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <a href={`/safaris/${pkg.slug}`}>
+                  <h3 class="text-xl font-bold text-[#1E2621] group-hover:text-[#0F6B38] transition-colors leading-snug">
+                    {pkg.title}
+                  </h3>
+                </a>
+
+                <ul class="mt-4 space-y-2 text-xs sm:text-sm text-gray-600">
+                  {pkg.highlights.slice(0, 3).map((h) => (
+                    <li class="flex items-start gap-2">
+                      <svg class="w-4 h-4 text-[#0F6B38] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                      </svg>
+                      <span class="line-clamp-1">{h}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <!-- Price & Link Button -->
+              <div class="mt-6 pt-5 border-t border-gray-100 flex items-center justify-between">
+                <div>
+                  <span class="block text-[11px] uppercase tracking-wider text-gray-400 font-semibold">From</span>
+                  <div class="flex items-baseline gap-1">
+                    <span class="text-2xl font-black text-[#0F6B38]">${pkg.price}</span>
+                    <span class="text-xs text-gray-500">/ person</span>
+                  </div>
+                </div>
+
+                <a
+                  href={`/safaris/${pkg.slug}`}
+                  class="inline-flex items-center justify-center px-4 py-2.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#E86A17] to-[#FFAE19] hover:brightness-105 active:scale-95 shadow-sm transition-all"
+                >
+                  View Itinerary →
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Empty State -->
+      <div id="no-results" class="hidden text-center py-20 bg-white rounded-3xl border border-gray-100 p-8">
+        <div class="text-4xl mb-3">🦁</div>
+        <h3 class="text-2xl font-bold font-serif-luxury text-[#1E2621]">No Safaris Found</h3>
+        <p class="text-sm text-gray-600 mt-2 max-w-md mx-auto">
+          We couldn't find any packages matching your exact filter criteria. Contact our safari desk and we will design a custom safari tailored just for you.
+        </p>
+        <button id="reset-empty" type="button" class="mt-6 px-6 py-2.5 rounded-full bg-[#0F6B38] text-white text-xs font-bold hover:bg-[#094423]">
+          Clear All Filters
+        </button>
+      </div>
+
+      <!-- Bottom Custom Request CTA -->
+      <div class="mt-16 p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-[#094423] to-[#0F6B38] text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl">
+        <div>
+          <span class="text-xs uppercase tracking-wider text-[#FFAE19] font-bold">Tailor-Made Specialists</span>
+          <h3 class="text-2xl sm:text-3xl font-bold font-serif-luxury mt-1">Want a Custom Private Itinerary?</h3>
+          <p class="text-sm text-slate-200 mt-1 max-w-xl font-light">
+            Share your preferred dates, party size, and wishlist animals. We will prepare your comprehensive proposal with lodge choices in under 24 hours.
+          </p>
+        </div>
+        <a
+          href="/#inquiry"
+          class="shrink-0 px-8 py-3.5 rounded-full text-sm font-bold bg-[#FFAE19] text-[#094423] hover:bg-white hover:text-[#0F6B38] shadow-md transition-all active:scale-95"
+        >
+          Plan Custom Safari
+        </a>
+      </div>
+
+    </div>
+
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  const countrySelect = document.getElementById('country-select') as HTMLSelectElement;
+  const styleSelect = document.getElementById('style-select') as HTMLSelectElement;
+  const durationSelect = document.getElementById('duration-select') as HTMLSelectElement;
+  const sortSelect = document.getElementById('sort-select') as HTMLSelectElement;
+  const resetBtn = document.getElementById('reset-filters') as HTMLButtonElement;
+  const resetEmptyBtn = document.getElementById('reset-empty') as HTMLButtonElement;
+  const resultsCount = document.getElementById('results-count') as HTMLElement;
+  const noResults = document.getElementById('no-results') as HTMLElement;
+  const grid = document.getElementById('safari-grid') as HTMLElement;
+  const items = Array.from(document.querySelectorAll('.safari-item')) as HTMLElement[];
+
+  function filterAndSort() {
+    const query = searchInput.value.toLowerCase().trim();
+    const country = countrySelect.value;
+    const style = styleSelect.value;
+    const duration = durationSelect.value;
+    const sort = sortSelect.value;
+
+    let visibleCount = 0;
+
+    items.forEach(item => {
+      const title = item.getAttribute('data-title') || '';
+      const dests = item.getAttribute('data-destinations') || '';
+      const cat = item.getAttribute('data-category') || '';
+      const c = item.getAttribute('data-country') || '';
+      const days = parseInt(item.getAttribute('data-days') || '0', 10);
+
+      // Match query
+      const matchesQuery = !query || title.includes(query) || dests.includes(query);
+
+      // Match country
+      const matchesCountry = country === 'all' || c === country;
+
+      // Match style
+      const matchesStyle = style === 'all' || cat === style;
+
+      // Match duration
+      let matchesDuration = true;
+      if (duration === '1') matchesDuration = days === 1;
+      else if (duration === '2-4') matchesDuration = days >= 2 && days <= 4;
+      else if (duration === '5-7') matchesDuration = days >= 5 && days <= 7;
+      else if (duration === '8+') matchesDuration = days >= 8;
+
+      if (matchesQuery && matchesCountry && matchesStyle && matchesDuration) {
+        item.style.display = 'flex';
+        visibleCount++;
+      } else {
+        item.style.display = 'none';
+      }
+    });
+
+    // Sort visible items
+    const sorted = items.slice().sort((a, b) => {
+      const priceA = parseInt(a.getAttribute('data-price') || '0', 10);
+      const priceB = parseInt(b.getAttribute('data-price') || '0', 10);
+      const daysA = parseInt(a.getAttribute('data-days') || '0', 10);
+      const daysB = parseInt(b.getAttribute('data-days') || '0', 10);
+
+      if (sort === 'price-asc') return priceA - priceB;
+      if (sort === 'price-desc') return priceB - priceA;
+      if (sort === 'duration-asc') return daysA - daysB;
+      if (sort === 'duration-desc') return daysB - daysA;
+      return 0; // recommended
+    });
+
+    sorted.forEach(item => grid.appendChild(item));
+
+    resultsCount.textContent = `Showing ${visibleCount} of ${items.length} Safaris`;
+
+    if (visibleCount === 0) {
+      noResults.classList.remove('hidden');
+    } else {
+      noResults.classList.add('hidden');
+    }
+  }
+
+  function resetAll() {
+    searchInput.value = '';
+    countrySelect.value = 'all';
+    styleSelect.value = 'all';
+    durationSelect.value = 'all';
+    sortSelect.value = 'recommended';
+    filterAndSort();
+  }
+
+  searchInput.addEventListener('input', filterAndSort);
+  countrySelect.addEventListener('change', filterAndSort);
+  styleSelect.addEventListener('change', filterAndSort);
+  durationSelect.addEventListener('change', filterAndSort);
+  sortSelect.addEventListener('change', filterAndSort);
+  resetBtn.addEventListener('click', resetAll);
+  resetEmptyBtn?.addEventListener('click', resetAll);
+</script>

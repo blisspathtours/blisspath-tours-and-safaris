@@ -1,0 +1,134 @@
+[
+  {
+    "id": "01_safaribookings",
+    "name": "SafariBookings",
+    "category": "Online Safari Marketplace",
+    "url": "https://www.safaribookings.com",
+    "screenshot": "screenshots/01_safaribookings.png",
+    "fileSizeKb": 5,
+    "meta": {
+      "title": "",
+      "metaDesc": "",
+      "h1": "",
+      "h2": []
+    }
+  },
+  {
+    "id": "03_intrepid",
+    "name": "Intrepid Travel",
+    "category": "Sustainable Adventure & Wildlife Travel",
+    "url": "https://www.intrepidtravel.com",
+    "screenshot": "screenshots/03_intrepid.png",
+    "fileSizeKb": 105,
+    "meta": {
+      "title": "Best Small Group Tours & Adventure Travel | Intrepid Travel EN",
+      "metaDesc": "The best small group tour means you’ll travel the local way. Affordable travel packages and the experience of a lifetime. Book an Intrepid tour today.",
+      "h1": "Real and remarkable small group trips worldwide",
+      "h2": [
+        "Who you travel with changes everything",
+        "Last minute deals",
+        "No additional surcharges"
+      ]
+    }
+  },
+  {
+    "id": "04_abercrombie_kent",
+    "name": "Abercrombie & Kent",
+    "category": "Ultra-Luxury Bespoke Safaris & Travel",
+    "url": "https://www.abercrombiekent.com",
+    "screenshot": "screenshots/04_abercrombie_kent.png",
+    "fileSizeKb": 5,
+    "meta": {
+      "title": "",
+      "metaDesc": "",
+      "h1": "",
+      "h2": []
+    }
+  },
+  {
+    "id": "05_wilderness_destinations",
+    "name": "Wilderness Destinations",
+    "category": "Luxury African Eco-Safaris & Conservation",
+    "url": "https://www.wildernessdestinations.com",
+    "screenshot": "screenshots/05_wilderness_destinations.png",
+    "fileSizeKb": 25,
+    "meta": {
+      "title": "Wilderness | Award-Winning Luxury Safaris",
+      "metaDesc": "Wilderness crafts life-changing journeys through Africa's most iconic wild places. Unrivalled safaris, rare wildlife. Let us help you plan yours.",
+      "h1": "WILDERNESS",
+      "h2": [
+        "Discover Earth's ultimate, untamed places",
+        "Discover Earth's ultimate, untamed places",
+        "Our Luxury Safari Destinations"
+      ]
+    }
+  },
+  {
+    "id": "06_singita",
+    "name": "Singita",
+    "category": "Iconic Luxury Safari Lodges & Reserves",
+    "url": "https://singita.com",
+    "screenshot": "screenshots/06_singita.png",
+    "fileSizeKb": 1266,
+    "meta": {
+      "title": "Luxury African Safari Lodges & Wildlife Reserves",
+      "metaDesc": "Singita provides restorative sanctuaries and encounters in the bush that guests won’t find anywhere else. Sought-after locations, intuitive attention to detail and the utmost privacy underpin every stay. ",
+      "h1": "Place of Miracles",
+      "h2": [
+        "Our Collection",
+        "Villa Collection",
+        "Where the wild brings you back to yourself"
+      ]
+    }
+  },
+  {
+    "id": "07_asilia_africa",
+    "name": "Asilia Africa",
+    "category": "East Africa Authentic Safaris & Camps",
+    "url": "https://www.asiliaafrica.com",
+    "screenshot": "screenshots/07_asilia_africa.png",
+    "fileSizeKb": 15,
+    "meta": {
+      "title": "African Safaris & Tours | Asilia Africa",
+      "metaDesc": "We offer genuine safaris that make a genuine difference to the people and places of East Africa",
+      "h1": "",
+      "h2": [
+        "The Asilia Edit. A new way to discover East Africa.",
+        "Ready. Set. Safari.",
+        "Let's connect..."
+      ]
+    }
+  },
+  {
+    "id": "08_natgeo_expeditions",
+    "name": "National Geographic Expeditions",
+    "category": "Wildlife & Cultural Exploration Tours",
+    "url": "https://www.nationalgeographic.com/expeditions/",
+    "screenshot": "screenshots/08_natgeo_expeditions.png",
+    "fileSizeKb": 5,
+    "meta": {
+      "title": "National Geographic Traveler Vacation Packages | National Geographic Expeditions",
+      "metaDesc": "The Best Luxury Travel Vacation Packages With National Geographic. Luxury Travel Packages: National Geographic Traveler Expert Guides, Special Access To Attractions & Cultural Experiences.",
+      "h1": "",
+      "h2": []
+    }
+  },
+  {
+    "id": "09_trafalgar",
+    "name": "Trafalgar Tours",
+    "category": "Guided Vacations & Escorted Tours",
+    "url": "https://www.trafalgar.com",
+    "screenshot": "screenshots/09_trafalgar.png",
+    "fileSizeKb": 715,
+    "meta": {
+      "title": "Tour Packages & Travel Vacations | Trafalgar Tours US",
+      "metaDesc": "Book tours and travel packages with Trafalgar. A small deposit secures your vacation, and if you need to cancel, you'll receive a full refund within 60 days.",
+      "h1": "Worldwide Group Tours & European River Cruises",
+      "h2": [
+        "2027 Early Booking Advantage",
+        "Your recently viewed and recommended trips",
+        "Popular searches"
+      ]
+    }
+  }
+]

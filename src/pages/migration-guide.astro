@@ -1,0 +1,150 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const seasons = [
+  {
+    months: "January – March",
+    location: "Southern Serengeti & Ndutu Plains (Tanzania)",
+    phase: "The Calving Season & Big Cat Action",
+    description: "Over 500,000 wildebeest calves are born within a 3-week window on the nutrient-rich volcanic plains of Ndutu. This incredible concentration of vulnerable young attracts massive numbers of lions, cheetahs, leopards, and hyenas, creating non-stop wildlife drama.",
+    highlights: ["8,000+ calves born daily", "Prime cheetah and lion hunt action", "Spectacular open short-grass savannah photography"],
+    recommendedSafari: "/safaris/serengeti-mara-grand"
+  },
+  {
+    months: "April – May",
+    location: "Central Serengeti & Moru Kopjes",
+    phase: "The Rut & Move Northward (Green Season)",
+    description: "As the rains conclude, the herds begin moving north through the central Seronera valley and western corridor. The air is crystal clear, dust is absent, landscapes are vibrant emerald green, and luxury camps offer exceptional value with fewer safari vehicles.",
+    highlights: ["Emerald green scenery and incredible birding", "Vibrant wildebeest mating rut", "Exclusive game viewing with few other vehicles"],
+    recommendedSafari: "/safaris/serengeti-mara-grand"
+  },
+  {
+    months: "June – July",
+    location: "Grumeti River & Western Serengeti",
+    phase: "The Grumeti River Crossings",
+    description: "The herds gather along the banks of the Grumeti River. Here they face their first major water barrier, braving gigantic Nile crocodiles waiting in the deep pools. Tree-climbing lions and dense riverine forests create unforgettable scenes.",
+    highlights: ["Terrifying Grumeti River crossings", "Monster Nile crocodile encounters", "Colobus monkeys and riverine wildlife"],
+    recommendedSafari: "/safaris/serengeti-mara-grand"
+  },
+  {
+    months: "July – October",
+    location: "Masai Mara National Reserve (Kenya) & Northern Serengeti",
+    phase: "The Iconic Mara River Crossings (Peak Spectacle)",
+    description: "The undisputed climax of the Great Migration! Over 1.5 million animals plunge across the turbulent Mara River between Tanzania and Kenya. Dust billows, predator ambushes occur along the banks, and the open Mara savannah fills with endless wildlife.",
+    highlights: ["World-famous Mara River plunge crossings", "Peak predator-prey interaction", "Hot air balloon safaris over endless herds"],
+    recommendedSafari: "/safaris/masai-mara-migration"
+  },
+  {
+    months: "November – December",
+    location: "Lobo Area to Southern Serengeti",
+    phase: "The Journey South",
+    description: "Prompted by the short rains, the herds begin their southern trek through the eastern Serengeti and Lobo region, heading back to the short-grass plains of Ndutu to begin the cycle anew.",
+    highlights: ["Scenic rocky granite kopjes", "Wild dog sightings in eastern corridors", "Vibrant festive holiday safaris"],
+    recommendedSafari: "/safaris/serengeti-mara-grand"
+  }
+];
+---
+
+<Layout
+  title="Great Migration Month-by-Month Guide | Bliss Path Tours & Safaris"
+  description="Where is the Great Migration right now? Explore our expert month-by-month guide to tracking 1.5 million wildebeest across Kenya's Masai Mara and Tanzania's Serengeti."
+>
+  <Header />
+
+  <main class="bg-[#FDFBF7] min-h-screen">
+    
+    <!-- Hero Header -->
+    <div class="relative py-24 bg-gradient-to-r from-[#094423] via-[#0F6B38] to-[#121814] text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFAE19] text-[#094423] text-xs font-bold uppercase tracking-wider mb-4">
+          <span>Official Safari Guide</span>
+        </div>
+        <h1 class="text-4xl sm:text-6xl font-bold font-serif-luxury tracking-tight leading-tight">
+          The Great Wildebeest Migration <br />
+          <span class="text-[#FFAE19] font-script-bliss text-5xl sm:text-7xl">Month-by-Month Calendar</span>
+        </h1>
+        <p class="mt-4 text-base sm:text-xl text-slate-200 font-light max-w-2xl mx-auto leading-relaxed">
+          The Great Migration never stops. It is a 365-day continuous circular journey between Kenya and Tanzania. Here is where to be and when.
+        </p>
+      </div>
+    </div>
+
+    <!-- Timeline Grid -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="space-y-12">
+        {seasons.map((s, idx) => (
+          <div class="bg-white rounded-3xl p-6 sm:p-10 border border-gray-100 shadow-md flex flex-col md:flex-row gap-8 items-start">
+            <div class="md:w-1/3">
+              <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-[#E86A17] text-white mb-2">
+                {s.months}
+              </span>
+              <h2 class="text-2xl font-bold font-serif-luxury text-[#1E2621]">
+                {s.location}
+              </h2>
+              <div class="text-xs uppercase tracking-wider text-[#0F6B38] font-bold mt-1">
+                {s.phase}
+              </div>
+            </div>
+
+            <div class="md:w-2/3 border-t md:border-t-0 md:border-l border-gray-100 pt-6 md:pt-0 md:pl-8 flex flex-col justify-between">
+              <div>
+                <p class="text-gray-700 text-sm sm:text-base leading-relaxed font-light mb-4">
+                  {s.description}
+                </p>
+                <div class="space-y-2 mb-6">
+                  {s.highlights.map((h) => (
+                    <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-800 font-medium">
+                      <span class="text-[#FFAE19] font-bold">✓</span>
+                      <span>{h}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div class="pt-4 border-t border-gray-100 flex items-center justify-between">
+                <span class="text-xs text-gray-400 font-medium">Recommended Safari Itinerary:</span>
+                <a
+                  href={s.recommendedSafari}
+                  class="px-5 py-2.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#0F6B38] to-[#094423] hover:brightness-110 transition-all shadow-xs"
+                >
+                  View Migration Itinerary →
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Quick Inquiry Box -->
+      <div class="mt-16 p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#094423] to-[#0F6B38] text-white text-center shadow-2xl">
+        <h3 class="text-2xl sm:text-3xl font-bold font-serif-luxury">
+          Want Help Timing Your Migration Safari?
+        </h3>
+        <p class="mt-2 text-slate-200 max-w-xl mx-auto text-sm">
+          Rainfall patterns shift herd movements slightly every year. Our guides monitor daily GPS positions of the herds. Talk with us to pick the perfect dates.
+        </p>
+        <div class="mt-8 flex flex-wrap justify-center gap-4">
+          <a
+            href="https://wa.me/254700000000"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-8 py-3.5 rounded-full text-sm font-bold bg-[#25D366] text-white hover:brightness-105 shadow-md transition-all flex items-center gap-2"
+          >
+            <span>Ask Guide on WhatsApp</span>
+          </a>
+          <a
+            href="/#inquiry"
+            class="px-8 py-3.5 rounded-full text-sm font-bold bg-[#FFAE19] text-[#094423] hover:bg-white shadow-md transition-all"
+          >
+            Request Custom Migration Quote
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <Footer />
+</Layout>

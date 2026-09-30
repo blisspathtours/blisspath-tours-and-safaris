@@ -1,0 +1,234 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+let rawPosts = [];
+try {
+  rawPosts = await getCollection('blog');
+} catch (e) {
+  rawPosts = [];
+}
+
+// Fallback to Vite import.meta.glob if collection returns empty (e.g. dev server started before sync)
+if (!rawPosts || rawPosts.length === 0) {
+  const globPosts = import.meta.glob('../../content/blog/*.md', { eager: true });
+  rawPosts = Object.entries(globPosts).map(([filepath, mod]: [string, any]) => {
+    const id = filepath.split('/').pop()?.replace('.md', '') || '';
+    return {
+      id,
+      slug: id,
+      data: mod.frontmatter
+    };
+  });
+}
+
+function parseDate(d: string) {
+  if (!d) return 0;
+  const p = d.split('/');
+  if (p.length === 3) return new Date(Number(p[2]), Number(p[1]) - 1, Number(p[0])).getTime();
+  return new Date(d).getTime() || 0;
+}
+
+const sortedPosts = rawPosts.sort((a, b) => parseDate(b.data.publishDate) - parseDate(a.data.publishDate));
+---
+
+<Layout
+  title="East Africa Safari Blog & Travel Guides | Bliss Path Tours & Safaris"
+  description="Expert wildlife safari guides, Great Migration tracking, national park entry fees, and travel tips for Kenya, Tanzania, and Uganda."
+>
+  <Header />
+
+  <main class="bg-[#FDFBF7] min-h-screen">
+    
+    <!-- Hero Banner -->
+    <div class="relative py-20 bg-gradient-to-r from-[#094423] via-[#0F6B38] to-[#121814] text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <span class="inline-block px-3 py-1 rounded-full bg-[#FFAE19] text-[#094423] text-xs font-bold uppercase tracking-wider mb-4">
+          Safari Intelligence
+        </span>
+        <h1 class="text-4xl sm:text-6xl font-bold font-serif-luxury tracking-tight leading-tight">
+          East Africa Safari Guides & Journal
+        </h1>
+        <p class="mt-4 text-base sm:text-xl text-slate-200 font-light max-w-2xl mx-auto leading-relaxed">
+          Comprehensive, 100% field-verified guides written by native safari naturalists. Discover park secrets, wildlife behavior, migration timings, and planning advice.
+        </p>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-gray-100">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+          
+          <div>
+            <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">Search Guides</label>
+            <div class="relative">
+              <input
+                id="blog-search-input"
+                type="text"
+                placeholder="e.g. Migration, Gorillas, Mara, Serengeti..."
+                class="w-full pl-9 pr-3 py-2.5 rounded-xl border border-gray-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50"
+              />
+              <svg class="w-4 h-4 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">Country</label>
+            <select id="blog-country-select" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50 cursor-pointer">
+              <option value="all">All Destinations (Kenya, Tanzania & Uganda)</option>
+              <option value="kenya">Kenya</option>
+              <option value="tanzania">Tanzania</option>
+              <option value="uganda">Uganda</option>
+            </select>
+          </div>
+
+          <div class="flex items-end justify-between sm:justify-end gap-4 pt-4 sm:pt-0">
+            <span id="blog-count" class="text-xs text-gray-500 font-semibold self-center">Showing {sortedPosts.length} Guides</span>
+            <button id="blog-reset" type="button" class="text-xs text-[#0F6B38] hover:text-[#E86A17] font-bold hover:underline cursor-pointer">
+              Reset Filters
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Blog Posts Grid -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {sortedPosts.map((post) => (
+          <article
+            class="blog-card bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 flex flex-col justify-between group"
+            data-title={post.data.title.toLowerCase()}
+            data-country={post.data.country.toLowerCase()}
+            data-desc={post.data.metaDescription.toLowerCase()}
+          >
+            <div class="relative h-60 overflow-hidden">
+              <a href={`/blog/${post.id}`} class="block w-full h-full">
+                <img
+                  src={post.data.heroImage}
+                  alt={post.data.title}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+              </a>
+
+              <div class="absolute top-4 left-4 flex gap-2">
+                <span class="px-3 py-1 rounded-full text-xs font-bold bg-[#0F6B38] text-white shadow-xs">
+                  {post.data.country}
+                </span>
+              </div>
+
+              <div class="absolute top-4 right-4">
+                <span class="px-2.5 py-1 rounded-full text-xs font-medium bg-black/40 text-white backdrop-blur-xs">
+                  ⏱ {post.data.readingTime}
+                </span>
+              </div>
+            </div>
+
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="text-[11px] font-semibold text-gray-400 mb-2">
+                  Published {post.data.publishDate} • By {post.data.author}
+                </div>
+                <a href={`/blog/${post.id}`}>
+                  <h2 class="text-xl font-bold font-serif-luxury text-[#1E2621] group-hover:text-[#0F6B38] transition-colors leading-snug">
+                    {post.data.title}
+                  </h2>
+                </a>
+                <p class="text-xs sm:text-sm text-gray-600 mt-3 line-clamp-3 leading-relaxed font-light">
+                  {post.data.metaDescription}
+                </p>
+              </div>
+
+              <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                <div class="flex flex-wrap gap-1">
+                  {post.data.keywords.slice(0, 2).map((k: string) => (
+                    <span class="text-[10px] font-medium px-2 py-0.5 rounded-md bg-gray-100 text-gray-600">
+                      #{k.replace(/\s+/g, '')}
+                    </span>
+                  ))}
+                </div>
+                <a
+                  href={`/blog/${post.id}`}
+                  class="text-xs font-bold text-[#E86A17] group-hover:underline flex items-center gap-1 shrink-0 ml-2"
+                >
+                  <span>Read Guide</span>
+                  <span>→</span>
+                </a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- Empty State -->
+      <div id="blog-no-results" class="hidden text-center py-20 bg-white rounded-3xl border border-gray-100 p-8">
+        <div class="text-4xl mb-3">📖</div>
+        <h3 class="text-2xl font-bold font-serif-luxury text-[#1E2621]">No Articles Found</h3>
+        <p class="text-sm text-gray-600 mt-2 max-w-md mx-auto">
+          We couldn't find any articles matching your search query. Clear your filters or browse all destinations.
+        </p>
+        <button id="blog-reset-empty" type="button" class="mt-6 px-6 py-2.5 rounded-full bg-[#0F6B38] text-white text-xs font-bold hover:bg-[#094423]">
+          Clear Search
+        </button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  const searchInput = document.getElementById('blog-search-input') as HTMLInputElement;
+  const countrySelect = document.getElementById('blog-country-select') as HTMLSelectElement;
+  const resetBtn = document.getElementById('blog-reset') as HTMLButtonElement;
+  const resetEmptyBtn = document.getElementById('blog-reset-empty') as HTMLButtonElement;
+  const countEl = document.getElementById('blog-count') as HTMLElement;
+  const noResults = document.getElementById('blog-no-results') as HTMLElement;
+  const cards = Array.from(document.querySelectorAll('.blog-card')) as HTMLElement[];
+
+  function filterPosts() {
+    const q = searchInput.value.toLowerCase().trim();
+    const c = countrySelect.value;
+    let count = 0;
+
+    cards.forEach(card => {
+      const title = card.getAttribute('data-title') || '';
+      const country = card.getAttribute('data-country') || '';
+      const desc = card.getAttribute('data-desc') || '';
+
+      const matchQ = !q || title.includes(q) || desc.includes(q);
+      const matchC = c === 'all' || country === c;
+
+      if (matchQ && matchC) {
+        card.style.display = 'flex';
+        count++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    countEl.textContent = `Showing ${count} of ${cards.length} Guides`;
+    if (count === 0) noResults.classList.remove('hidden');
+    else noResults.classList.add('hidden');
+  }
+
+  function reset() {
+    searchInput.value = '';
+    countrySelect.value = 'all';
+    filterPosts();
+  }
+
+  searchInput.addEventListener('input', filterPosts);
+  countrySelect.addEventListener('change', filterPosts);
+  resetBtn.addEventListener('click', reset);
+  resetEmptyBtn?.addEventListener('click', reset);
+</script>

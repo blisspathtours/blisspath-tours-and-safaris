@@ -1,0 +1,105 @@
+---
+const reviews = [
+  {
+    name: "Dr. Sarah & James Miller",
+    initials: "SM",
+    location: "London, United Kingdom",
+    safari: "7-Day Masai Mara & Amboseli Migration",
+    quote: "Bliss Path made our 20th anniversary trip utterly unforgettable. Our guide, Joseph, possessed an uncanny sixth sense for wildlife. We saw a cheetah hunt on day two, four leopards, and the wildebeest crossing at the Mara river. 5 stars does not do them justice!",
+    rating: 5,
+    date: "August 2025"
+  },
+  {
+    name: "Michael & Karen Vance",
+    initials: "MV",
+    location: "California, USA",
+    safari: "10-Day Kenya & Tanzania Grand Odyssey",
+    quote: "From the prompt pickup in Nairobi to the champagne breakfast in the Serengeti, everything went like clockwork. The Land Cruiser was spotless and having charging ports for our camera gear was a lifesaver. You will not find better service in East Africa.",
+    rating: 5,
+    date: "October 2025"
+  },
+  {
+    name: "Elena Rostova",
+    initials: "ER",
+    location: "Zurich, Switzerland",
+    safari: "6-Day Tsavo & Diani Bush to Beach",
+    quote: "The combination of the red elephants of Tsavo and the serene turquoise waters of Diani Beach was pure perfection. The Bliss Path team took care of all park fees and domestic flights seamlessly. Highly recommended!",
+    rating: 5,
+    date: "January 2026"
+  }
+];
+---
+
+<section id="reviews" class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Title -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFAE19]/20 text-[#094423] text-xs font-bold uppercase tracking-wider mb-3">
+        <span>Verified Traveler Reviews</span>
+      </div>
+      <h2 class="text-3xl sm:text-5xl font-bold text-[#1E2621] tracking-tight">
+        Unforgettable Stories From The <span class="text-[#0F6B38]">Savannah</span>
+      </h2>
+      <p class="mt-4 text-base sm:text-lg text-gray-600">
+        Over 1,200 travelers have trusted Bliss Path with their African bucket-list safaris. Here is what they have to say.
+      </p>
+    </div>
+
+    <!-- Testimonials Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {reviews.map((rev) => (
+        <div class="bg-[#FDFBF7] p-8 rounded-2xl border border-gray-200/80 shadow-sm hover:shadow-lg transition-shadow flex flex-col justify-between relative">
+          <!-- Quote Icon -->
+          <div class="text-[#FFAE19]/40 mb-4">
+            <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+            </svg>
+          </div>
+
+          <!-- Body -->
+          <div>
+            <!-- Stars -->
+            <div class="flex text-[#FFAE19] text-base gap-1 mb-3">
+              {"★".repeat(rev.rating)}
+            </div>
+            <p class="text-sm sm:text-base text-gray-700 italic leading-relaxed">
+              "{rev.quote}"
+            </p>
+          </div>
+
+          <!-- Author Info -->
+          <div class="mt-8 pt-6 border-t border-gray-200/60 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#0F6B38] to-[#094423] text-white flex items-center justify-center font-bold text-sm ring-2 ring-[#FFAE19] shrink-0">
+              {rev.initials}
+            </div>
+            <div>
+              <div class="font-bold text-sm text-[#1E2621]">{rev.name}</div>
+              <div class="text-xs text-gray-500">{rev.location}</div>
+              <div class="text-[11px] text-[#0F6B38] font-semibold mt-0.5">{rev.safari}</div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Rating Summary Bar -->
+    <div class="mt-14 p-6 rounded-2xl bg-[#094423] text-white flex flex-col sm:flex-row items-center justify-around gap-6 text-center">
+      <div>
+        <div class="text-3xl font-extrabold text-[#FFAE19]">4.95 / 5.0</div>
+        <div class="text-xs text-slate-300 mt-1">Aggregated Client Satisfaction</div>
+      </div>
+      <div class="hidden sm:block w-px h-10 bg-white/20"></div>
+      <div>
+        <div class="text-2xl font-bold">100% Guaranteed</div>
+        <div class="text-xs text-slate-300 mt-1">Refund & Rescheduling Assurance</div>
+      </div>
+      <div class="hidden sm:block w-px h-10 bg-white/20"></div>
+      <div>
+        <div class="text-2xl font-bold">TripAdvisor Certificate</div>
+        <div class="text-xs text-slate-300 mt-1">Of Excellence Recipient</div>
+      </div>
+    </div>
+
+  </div>
+</section>

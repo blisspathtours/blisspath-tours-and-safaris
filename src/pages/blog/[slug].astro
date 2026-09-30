@@ -1,0 +1,365 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getDestinationBySlug } from '../../data/destinations';
+
+export async function getStaticPaths() {
+  const globPosts = import.meta.glob('../../content/blog/*.md', { eager: true });
+  return Object.entries(globPosts).map(([filepath, mod]: [string, any]) => {
+    const slug = filepath.split('/').pop()?.replace('.md', '') || '';
+    return {
+      params: { slug },
+      props: {
+        post: {
+          id: slug,
+          slug,
+          data: mod.frontmatter
+        },
+        Content: mod.Content
+      }
+    };
+  });
+}
+
+const { post, Content } = Astro.props;
+const destination = getDestinationBySlug(post.data.destinationSlug);
+
+const canonicalUrl = `https://blisspathtours.com/blog/${post.slug}`;
+
+// Schema.org BlogPosting & BreadcrumbList Structured Data
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": `${canonicalUrl}#article`,
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": canonicalUrl
+      },
+      "headline": post.data.title,
+      "description": post.data.metaDescription,
+      "image": [post.data.heroImage],
+      "datePublished": "2026-09-30T08:00:00+03:00",
+      "dateModified": "2026-09-30T08:00:00+03:00",
+      "author": {
+        "@type": "Organization",
+        "name": post.data.author || "Bliss Path Safari Naturalists",
+        "url": "https://blisspathtours.com/about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Bliss Path Tours & Safaris",
+        "url": "https://blisspathtours.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://blisspathtours.com/images/logo.jpg"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": canonicalUrl
+      },
+      "keywords": post.data.keywords.join(", "),
+      "articleSection": "African Safari Travel Guides"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalUrl}#breadcrumb`,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://blisspathtours.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Safari Blog",
+          "item": "https://blisspathtours.com/blog"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": post.data.title,
+          "item": canonicalUrl
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${canonicalUrl}#faq`,
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": `When is the best time to visit ${destination ? destination.name : 'this destination'}?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": destination ? destination.bestTimeToVisit : "The dry season between June and October offers optimal wildlife viewing, while the calving season in January to March provides peak predator action."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `What wildlife can you see in ${destination ? destination.name : 'this park'}?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": destination ? `Common sightings include ${destination.wildlifeHighlights.join(', ')}.` : "Abundant big game including lions, leopards, elephants, and diverse bird species."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `How many days should I spend in ${destination ? destination.name : 'this reserve'}?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": destination ? `We recommend a minimum of ${destination.recommendedDays} to thoroughly explore the wildlife circuits and scenic highlights.` : "A minimum of 3 to 4 days is recommended for comprehensive game viewing."
+          }
+        }
+      ]
+    }
+  ]
+};
+
+const tableOfContents = [
+  { title: "1. Geographical Overview & Boundaries", href: "#1-geographical-overview-boundaries--ecosystem" },
+  { title: "2. Iconic Wildlife & Animal Encounters", href: "#2-iconic-wildlife--key-animal-encounters" },
+  { title: "3. Major Sights & Must-Do Activities", href: "#3-major-attractions--must-experience-activities" },
+  { title: "4. Month-by-Month Weather & Best Time to Visit", href: "#4-month-by-month-weather--best-time-to-visit" },
+  { title: "5. Park Entry Fees, Regulations & Travel Logistics", href: "#5-official-park-entry-fees-regulations--travel-logistics" },
+  { title: "6. Where to Stay: Lodges & Luxury Camps", href: "#6-where-to-stay-accommodation--lodge-categories" },
+  { title: "7. Packing & Photography Checklist", href: "#7-essential-packing--photography-checklist" },
+  { title: "8. Conservation & Community Giving", href: "#8-responsible-tourism--local-community-giving" },
+  { title: "9. Recommended Safari Itineraries", href: "#9-recommended-safari-itineraries-featuring" }
+];
+---
+
+<Layout
+  title={`${post.data.title} | Bliss Path Safari Field Guide`}
+  description={post.data.metaDescription}
+  image={post.data.heroImage}
+  type="article"
+  publishDate="2026-09-30"
+  author={post.data.author}
+  keywords={post.data.keywords}
+  canonicalUrl={canonicalUrl}
+  articleJsonLd={articleJsonLd}
+>
+  <Header />
+
+  <main class="bg-[#FDFBF7] min-h-screen pb-24">
+    
+    <!-- Hero Article Header -->
+    <header class="relative py-20 bg-gradient-to-r from-[#094423] via-[#0F6B38] to-[#121814] text-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        
+        <!-- Breadcrumb & Badges -->
+        <nav aria-label="Breadcrumb" class="flex flex-wrap items-center justify-center gap-2 mb-4 text-xs font-semibold">
+          <a href="/" class="text-slate-300 hover:text-white">Home</a>
+          <span>/</span>
+          <a href="/blog" class="text-[#FFAE19] hover:underline">Safari Guides</a>
+          <span>/</span>
+          <span class="text-slate-200">{post.data.country}</span>
+          <span>•</span>
+          <span class="px-2.5 py-0.5 rounded-full bg-white/15 text-white">{post.data.readingTime}</span>
+        </nav>
+
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-bold font-serif-luxury tracking-tight leading-tight">
+          {post.data.title}
+        </h1>
+
+        <div class="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-slate-300">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-[#FFAE19] text-[#094423] flex items-center justify-center font-bold text-[10px]">
+              BP
+            </span>
+            <span>By <strong class="text-white font-medium">{post.data.author}</strong></span>
+          </div>
+          <span>•</span>
+          <span>Published <strong>30/09/2026</strong></span>
+          <span>•</span>
+          <span class="text-[#FFAE19] font-medium">✓ Field-Verified Information</span>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main Hero Image -->
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
+      <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-white h-72 sm:h-[480px]">
+        <img
+          src={post.data.heroImage}
+          alt={`${post.data.title} - Wildlife Safari`}
+          class="w-full h-full object-cover"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+
+    <!-- Article Content & Sidebar -->
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-14">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        <!-- Main Prose Article Column -->
+        <article class="lg:col-span-8 bg-white p-6 sm:p-12 rounded-3xl border border-gray-100 shadow-sm">
+          
+          <!-- Table of Contents for SEO Sitelinks & Quick Jumping -->
+          <div class="mb-10 p-6 rounded-2xl bg-[#FDFBF7] border border-gray-200">
+            <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#0F6B38] mb-3">
+              <svg class="w-4 h-4 text-[#FFAE19]" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+              </svg>
+              <span>Table of Contents (Jump to Section)</span>
+            </div>
+            <ol class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-gray-700">
+              {tableOfContents.map((item) => (
+                <li>
+                  <a href={item.href} class="hover:text-[#0F6B38] hover:underline transition-colors block py-0.5">
+                    {item.title}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <!-- Markdown Content Body -->
+          <div class="prose prose-lg max-w-none text-gray-800 leading-relaxed font-light prose-headings:font-serif-luxury prose-headings:font-bold prose-headings:text-[#1E2621] prose-h2:text-2xl sm:prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:scroll-mt-28 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-2 prose-a:text-[#0F6B38] prose-a:font-semibold hover:prose-a:text-[#E86A17] prose-strong:font-bold prose-strong:text-[#1E2621] prose-li:my-1.5 prose-hr:my-10 prose-hr:border-gray-200">
+            <Content />
+          </div>
+
+          <!-- Frequently Asked Questions Accordion (Matches Schema FAQPage) -->
+          {destination && (
+            <section class="mt-14 pt-10 border-t border-gray-200">
+              <h2 class="text-2xl sm:text-3xl font-bold font-serif-luxury text-[#1E2621] mb-6">
+                Frequently Asked Questions About {destination.name}
+              </h2>
+              <div class="space-y-4 text-sm">
+                
+                <details class="group bg-[#FDFBF7] p-4 sm:p-5 rounded-2xl border border-gray-200 open:shadow-xs">
+                  <summary class="font-bold text-[#1E2621] cursor-pointer flex justify-between items-center list-none">
+                    <span>When is the absolute best time to visit {destination.name}?</span>
+                    <span class="w-5 h-5 rounded-full bg-[#0F6B38]/10 text-[#0F6B38] flex items-center justify-center text-xs group-open:rotate-180 transition-transform">▼</span>
+                  </summary>
+                  <p class="mt-3 text-gray-600 font-light leading-relaxed">
+                    {destination.bestTimeToVisit}. During these months, the wildlife trails are dry, game drives are straightforward, and predator-prey sightings around water resources are maximized.
+                  </p>
+                </details>
+
+                <details class="group bg-[#FDFBF7] p-4 sm:p-5 rounded-2xl border border-gray-200 open:shadow-xs">
+                  <summary class="font-bold text-[#1E2621] cursor-pointer flex justify-between items-center list-none">
+                    <span>What key animals will I see on safari here?</span>
+                    <span class="w-5 h-5 rounded-full bg-[#0F6B38]/10 text-[#0F6B38] flex items-center justify-center text-xs group-open:rotate-180 transition-transform">▼</span>
+                  </summary>
+                  <p class="mt-3 text-gray-600 font-light leading-relaxed">
+                    {destination.name} is famous for {destination.wildlifeHighlights.join(', ')}. Guided game drives in custom 4x4 Land Cruisers provide high probabilities of close encounters.
+                  </p>
+                </details>
+
+                <details class="group bg-[#FDFBF7] p-4 sm:p-5 rounded-2xl border border-gray-200 open:shadow-xs">
+                  <summary class="font-bold text-[#1E2621] cursor-pointer flex justify-between items-center list-none">
+                    <span>How many days are recommended for {destination.name}?</span>
+                    <span class="w-5 h-5 rounded-full bg-[#0F6B38]/10 text-[#0F6B38] flex items-center justify-center text-xs group-open:rotate-180 transition-transform">▼</span>
+                  </summary>
+                  <p class="mt-3 text-gray-600 font-light leading-relaxed">
+                    We recommend spending {destination.recommendedDays}. This allows for morning dawn patrols, golden hour sunset drives, and relaxing afternoons at your safari lodge without rushing.
+                  </p>
+                </details>
+
+              </div>
+            </section>
+          )}
+
+          <!-- Share & Tags -->
+          <div class="mt-12 pt-8 border-t border-gray-100 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex flex-wrap gap-1.5">
+              {post.data.keywords.map((k: string) => (
+                <span class="text-xs font-semibold px-3 py-1 rounded-full bg-gray-100 text-gray-700">
+                  #{k.replace(/\s+/g, '')}
+                </span>
+              ))}
+            </div>
+
+            <a
+              href="https://wa.me/254700000000"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#25D366] text-white text-xs font-bold hover:brightness-105 shadow-sm"
+            >
+              <span>Ask a Safari Specialist on WhatsApp</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Sticky Sidebar: Destination Link & Quick Inquiry -->
+        <aside class="lg:col-span-4 sticky top-24 space-y-6">
+          
+          {destination && (
+            <div class="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm">
+              <span class="text-[11px] font-bold text-[#E86A17] uppercase tracking-wider block mb-1">
+                Explore Destination
+              </span>
+              <h3 class="text-xl font-bold font-serif-luxury text-[#1E2621]">
+                {destination.name}
+              </h3>
+              <p class="text-xs text-gray-600 mt-2 line-clamp-3">
+                {destination.overview}
+              </p>
+              <a
+                href={`/destinations/${destination.slug}`}
+                class="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-[#0F6B38] hover:text-[#E86A17] transition-colors"
+              >
+                <span>View Full Destination Guide</span>
+                <span>→</span>
+              </a>
+            </div>
+          )}
+
+          <!-- Booking Callout Card -->
+          <div class="bg-gradient-to-br from-[#094423] to-[#0F6B38] rounded-3xl p-6 text-white shadow-xl">
+            <span class="text-xs uppercase tracking-wider text-[#FFAE19] font-bold">Private Safari Outfitter</span>
+            <h3 class="text-xl font-bold font-serif-luxury mt-1">
+              Want to Experience This in Person?
+            </h3>
+            <p class="text-xs text-slate-200 mt-2 leading-relaxed font-light">
+              Bliss Path Tours & Safaris designs 100% tailor-made private safaris with custom 4x4 Land Cruisers and elite native guides.
+            </p>
+
+            <div class="mt-6 space-y-2.5">
+              <a
+                href="/#inquiry"
+                class="w-full py-3 px-4 rounded-full bg-gradient-to-r from-[#E86A17] to-[#FFAE19] text-white font-bold text-xs shadow-md hover:brightness-105 flex items-center justify-center"
+              >
+                <span>Plan Your Safari (Free Quote)</span>
+              </a>
+
+              <a
+                href="https://wa.me/254700000000"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full py-2.5 px-4 rounded-full bg-white text-[#094423] font-bold text-xs hover:bg-[#FFAE19] transition-all flex items-center justify-center gap-1.5"
+              >
+                <span>WhatsApp Safari Guide</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- All Destinations Quick Links -->
+          <div class="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm text-xs space-y-2">
+            <div class="font-bold text-gray-800 uppercase tracking-wider text-[11px] mb-2">Popular Field Guides</div>
+            <a href="/blog/masai-mara-safari-guide" class="block text-gray-600 hover:text-[#0F6B38] hover:underline">Masai Mara Complete Guide</a>
+            <a href="/blog/serengeti-safari-guide" class="block text-gray-600 hover:text-[#0F6B38] hover:underline">Serengeti Safari Guide</a>
+            <a href="/blog/bwindi-impenetrable-safari-guide" class="block text-gray-600 hover:text-[#0F6B38] hover:underline">Bwindi Gorilla Trekking Guide</a>
+            <a href="/blog/kilimanjaro-safari-guide" class="block text-gray-600 hover:text-[#0F6B38] hover:underline">Kilimanjaro Climbing Guide</a>
+            <a href="/migration-guide" class="block text-[#E86A17] font-semibold hover:underline mt-2">View Migration Calendar →</a>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+
+  </main>
+
+  <Footer />
+</Layout>
