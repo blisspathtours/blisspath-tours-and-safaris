@@ -1,25 +1,89 @@
 ---
+import { Image } from 'astro:assets';
+import lionSunset from '../assets/hero/hero-lion-sunset.webp';
+import kilimanjaroElephants from '../assets/hero/hero-kilimanjaro-elephants.webp';
+import giraffeSunset from '../assets/hero/hero-giraffe-sunset.webp';
+import greatMigration from '../assets/hero/hero-great-migration.webp';
+import mountainGorilla from '../assets/hero/hero-mountain-gorilla.webp';
+import dianiBeach from '../assets/hero/hero-diani-beach.webp';
+
+const carouselSlides = [
+  {
+    image: lionSunset,
+    alt: "Majestic male lion on savannah mound at golden sunset in Masai Mara",
+    location: "Masai Mara • Lion Kingdom",
+    priority: true
+  },
+  {
+    image: kilimanjaroElephants,
+    alt: "Wild elephant herd grazing under snow-capped Mount Kilimanjaro in Amboseli",
+    location: "Amboseli • Mount Kilimanjaro",
+    priority: false
+  },
+  {
+    image: giraffeSunset,
+    alt: "African giraffe walking across savannah against glowing setting sun and acacia trees",
+    location: "Serengeti & Mara • Golden Hour",
+    priority: false
+  },
+  {
+    image: greatMigration,
+    alt: "Thousands of wildebeest and zebras charging across the golden plains during Great Migration",
+    location: "Serengeti • Great Migration",
+    priority: false
+  },
+  {
+    image: mountainGorilla,
+    alt: "Wild mountain gorilla silverback in mist-shrouded Bwindi Impenetrable Forest",
+    location: "Bwindi • Mountain Gorillas",
+    priority: false
+  },
+  {
+    image: dianiBeach,
+    alt: "Turquoise Indian Ocean and traditional wooden dhow sailboat at sunset on Diani Beach",
+    location: "Diani Beach • Coastal Escape",
+    priority: false
+  }
+];
 ---
 
-<section class="relative min-h-[75vh] sm:min-h-[85vh] flex items-center justify-center overflow-hidden">
-  <!-- Cinematic Savannah Sunset Background -->
-  <div class="absolute inset-0 z-0">
-    <img
-      src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/17/Masai_Mara_at_Sunset.jpg/1280px-Masai_Mara_at_Sunset.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
-      alt="Masai Mara Sunset Savannah"
-      class="w-full h-full object-cover object-center"
-      loading="eager"
-      fetchpriority="high"
-    />
-    <!-- Subtle dark gradient for contrast -->
-    <div class="absolute inset-0 bg-black/45 sm:bg-black/40"></div>
-    <div class="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-[#FDFBF7] to-transparent"></div>
+<section id="hero-carousel-section" class="relative min-h-[75vh] sm:min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#121814]">
+  
+  <!-- Carousel Background Slides -->
+  <div class="absolute inset-0 z-0 overflow-hidden">
+    {carouselSlides.map((slide, index) => (
+      <div
+        class={`hero-slide absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}
+        data-index={index}
+      >
+        <Image
+          src={slide.image}
+          alt={slide.alt}
+          widths={[640, 1024, 1600]}
+          sizes="100vw"
+          format="webp"
+          quality={88}
+          loading={slide.priority ? "eager" : "lazy"}
+          fetchpriority={slide.priority ? "high" : "auto"}
+          class="w-full h-full object-cover object-center transform scale-100 transition-transform duration-7000 ease-out"
+        />
+        <!-- Cinematic gradient overlays for contrast and readability -->
+        <div class="absolute inset-0 bg-gradient-to-t from-[#121814]/85 via-black/35 to-black/30"></div>
+        <div class="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-[#FDFBF7] to-transparent"></div>
+      </div>
+    ))}
   </div>
 
-  <!-- Minimal Hero Content -->
-  <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center">
+  <!-- Minimal Floating Content -->
+  <div class="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center">
     
+    <!-- Location Pill Indicator -->
+    <div id="slide-caption" class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-[#FFAE19] text-xs font-semibold tracking-wider uppercase mb-4 sm:mb-6 shadow-sm transition-all duration-500">
+      <span class="w-2 h-2 rounded-full bg-[#FFAE19] animate-pulse"></span>
+      <span id="caption-text">{carouselSlides[0].location}</span>
+    </div>
 
+    <!-- Main Headline in Plus Jakarta Sans -->
     <h1 class="text-4xl sm:text-7xl font-extrabold text-white tracking-tight leading-[1.1] drop-shadow-md">
       Untamed Africa. <br />
       <span class="bg-gradient-to-r from-[#FFAE19] via-[#FFC043] to-[#F38218] bg-clip-text text-transparent italic">
@@ -27,7 +91,7 @@
       </span>
     </h1>
 
-    <p class="mt-4 sm:mt-5 text-base sm:text-xl text-slate-200 font-light max-w-xl leading-relaxed drop-shadow">
+    <p class="mt-4 sm:mt-5 text-base sm:text-xl text-slate-100 font-light max-w-xl leading-relaxed drop-shadow">
       Bespoke private wildlife expeditions across Kenya, Tanzania, and Uganda.
     </p>
 
@@ -41,11 +105,179 @@
       </a>
       <a
         href="#inquiry"
-        class="px-7 py-3 rounded-full bg-white/15 backdrop-blur-md border border-white/30 text-white font-bold text-sm hover:bg-white hover:text-[#094423] active:scale-95 transition-all"
+        class="px-7 py-3 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white font-bold text-sm hover:bg-white hover:text-[#094423] active:scale-95 transition-all"
       >
         Plan Custom Trip
       </a>
     </div>
 
   </div>
+
+  <!-- Carousel Navigation Controls -->
+  <div class="absolute bottom-8 z-30 inset-x-0 flex items-center justify-center gap-3">
+    <!-- Previous Button -->
+    <button
+      id="prev-slide"
+      type="button"
+      class="p-2 rounded-full bg-black/40 hover:bg-black/70 text-white/80 hover:text-white backdrop-blur-xs border border-white/25 transition-all cursor-pointer focus:outline-none"
+      aria-label="Previous Slide"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+
+    <!-- 6 Indicator Dots -->
+    <div class="flex items-center gap-1.5 sm:gap-2">
+      {carouselSlides.map((_, idx) => (
+        <button
+          type="button"
+          data-slide-to={idx}
+          class={`carousel-dot h-2 rounded-full transition-all duration-500 cursor-pointer ${idx === 0 ? 'bg-[#FFAE19] w-7 sm:w-8' : 'bg-white/50 w-2 sm:w-2.5 hover:bg-white'}`}
+          aria-label={`Go to slide ${idx + 1}`}
+        ></button>
+      ))}
+    </div>
+
+    <!-- Next Button -->
+    <button
+      id="next-slide"
+      type="button"
+      class="p-2 rounded-full bg-black/40 hover:bg-black/70 text-white/80 hover:text-white backdrop-blur-xs border border-white/25 transition-all cursor-pointer focus:outline-none"
+      aria-label="Next Slide"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+
 </section>
+
+<script>
+  const locations = [
+    "Masai Mara • Lion Kingdom",
+    "Amboseli • Mount Kilimanjaro",
+    "Serengeti & Mara • Golden Hour",
+    "Serengeti • Great Migration",
+    "Bwindi • Mountain Gorillas",
+    "Diani Beach • Coastal Escape"
+  ];
+
+  const slides = document.querySelectorAll<HTMLElement>('.hero-slide');
+  const dots = document.querySelectorAll<HTMLButtonElement>('.carousel-dot');
+  const captionText = document.getElementById('caption-text');
+  const prevBtn = document.getElementById('prev-slide');
+  const nextBtn = document.getElementById('next-slide');
+  const section = document.getElementById('hero-carousel-section');
+
+  let currentIndex = 0;
+  let autoplayTimer: ReturnType<typeof setInterval> | null = null;
+
+  function showSlide(index: number) {
+    if (index === currentIndex && index !== 0) return;
+    
+    slides.forEach((slide, i) => {
+      if (i === index) {
+        slide.classList.remove('opacity-0', 'pointer-events-none', 'z-0');
+        slide.classList.add('opacity-100', 'z-10');
+      } else {
+        slide.classList.remove('opacity-100', 'z-10');
+        slide.classList.add('opacity-0', 'pointer-events-none', 'z-0');
+      }
+    });
+
+    dots.forEach((dot, i) => {
+      if (i === index) {
+        dot.classList.add('bg-[#FFAE19]', 'w-7', 'sm:w-8');
+        dot.classList.remove('bg-white/50', 'w-2', 'sm:w-2.5');
+      } else {
+        dot.classList.remove('bg-[#FFAE19]', 'w-7', 'sm:w-8');
+        dot.classList.add('bg-white/50', 'w-2', 'sm:w-2.5');
+      }
+    });
+
+    if (captionText && locations[index]) {
+      captionText.textContent = locations[index];
+    }
+
+    currentIndex = index;
+  }
+
+  function nextSlide() {
+    const nextIndex = (currentIndex + 1) % slides.length;
+    showSlide(nextIndex);
+  }
+
+  function prevSlide() {
+    const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+    showSlide(prevIndex);
+  }
+
+  function startAutoplay() {
+    if (!autoplayTimer) {
+      autoplayTimer = setInterval(nextSlide, 4500);
+    }
+  }
+
+  function stopAutoplay() {
+    if (autoplayTimer) {
+      clearInterval(autoplayTimer);
+      autoplayTimer = null;
+    }
+  }
+
+  // Event Listeners
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      stopAutoplay();
+      nextSlide();
+      startAutoplay();
+    });
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      stopAutoplay();
+      prevSlide();
+      startAutoplay();
+    });
+  }
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      stopAutoplay();
+      showSlide(i);
+      startAutoplay();
+    });
+  });
+
+  if (section) {
+    section.addEventListener('mouseenter', stopAutoplay);
+    section.addEventListener('mouseleave', startAutoplay);
+  }
+
+  // Touch Swipe Support for Mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  if (section) {
+    section.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      stopAutoplay();
+    }, { passive: true });
+
+    section.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchStartX - touchEndX > 40) {
+        nextSlide();
+      } else if (touchEndX - touchStartX > 40) {
+        prevSlide();
+      }
+      startAutoplay();
+    }, { passive: true });
+  }
+
+  // Start Autoplay
+  startAutoplay();
+</script>
