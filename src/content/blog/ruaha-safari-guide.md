@@ -189,4 +189,4 @@ Ready to experience Ruaha National Park in person? The senior safari directors a
 * **Transparent Pricing with Zero Hidden Fees.**
 * **Free, No-Obligation Custom Itinerary & Quote in Under 24 Hours.**
 
-👉 **[Click Here to Plan Your Custom Safari](/ #inquiry)** or reach out directly to our 24/7 safari desk via **[WhatsApp (+254 700 000 000)](https://wa.me/254700000000)**.
+👉 **[Click Here to Plan Your Custom Safari](/ #inquiry)** or reach out directly to our 24/7 safari desk via **[WhatsApp (0741319503 / 0721573509)](https://wa.me/254741319503)**.
