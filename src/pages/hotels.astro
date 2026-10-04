@@ -1,0 +1,256 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const lodges = [
+  {
+    name: "Mara Sopa Safari Lodge",
+    destination: "Masai Mara National Reserve",
+    country: "Kenya",
+    tier: "Classic Luxury",
+    priceRange: "$280 – $420 / night",
+    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/17/Masai_Mara_at_Sunset.jpg/1280px-Masai_Mara_at_Sunset.jpg",
+    features: ["Swimming pool", "Ensuite cottages", "Savannah sunset deck", "Full board dining"],
+    description: "Nestled in the Oloolaimutia Hills of the eastern Masai Mara, featuring traditional round African rondavel architecture, lush gardens, and regular visits from grazing gazelles and elephants."
+  },
+  {
+    name: "Ol Tukai Lodge Amboseli",
+    destination: "Amboseli National Park",
+    country: "Kenya",
+    tier: "Safari Elegance",
+    priceRange: "$310 – $480 / night",
+    image: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Elephants_at_Amboseli_national_park_against_Mount_Kilimanjaro.jpg",
+    features: ["Direct Kilimanjaro views", "Elephant swamp proximity", "Swimming pool", "Outdoor bar"],
+    description: "One of the best vantage points in Africa to view wild elephant herds feeding in the marshes directly against the dramatic snow-capped summit of Mount Kilimanjaro."
+  },
+  {
+    name: "Kubu Kubu Tented Lodge",
+    destination: "Central Serengeti",
+    country: "Tanzania",
+    tier: "Ultra-Luxury Tented",
+    priceRange: "$450 – $750 / night",
+    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/004_Sunrise_at_Serengeti.jpg/1280px-004_Sunrise_at_Serengeti.jpg",
+    features: ["Infinity pool", "Elevated hardwood decks", "360° Serengeti plains view", "Gourmet cuisine"],
+    description: "Strategically located in the central Seronera region with sweeping views of the Serengeti plains. Ideal year-round base for prime predator tracking and wildebeest migration herds."
+  },
+  {
+    name: "Ngorongoro Serena Safari Lodge",
+    destination: "Ngorongoro Crater Rim",
+    country: "Tanzania",
+    tier: "Crater Luxury",
+    priceRange: "$490 – $820 / night",
+    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Cr%C3%A1ter_volc%C3%A1nico_de_Ngorongoro%2C_Tanzania%2C_2024-05-22%2C_DD_10.jpg/1280px-Cr%C3%A1ter_volc%C3%A1nico_de_Ngorongoro%2C_Tanzania%2C_2024-05-22%2C_DD_10.jpg",
+    features: ["Perched 600m above crater floor", "River stone architecture", "Panoramic balconies", "Maasai dancers"],
+    description: "Engineered from indigenous river stone and clinged seamlessly to the forested volcanic crater rim, offering private balconies looking directly down into the 260-sq-km wildlife caldera."
+  },
+  {
+    name: "Mahogany Springs Lodge",
+    destination: "Bwindi Impenetrable Forest",
+    country: "Uganda",
+    tier: "Eco-Boutique Luxury",
+    priceRange: "$350 – $560 / night",
+    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ec/Gorila_de_monta%C3%B1a_%28Gorilla_beringei_beringei%29%2C_parque_nacional_de_la_Selva_Impenetrable_de_Bwindi%2C_Uganda%2C_2024-05-24%2C_DD_16.jpg/1280px-Gorila_de_monta%C3%B1a_%28Gorilla_beringei_beringei%29%2C_parque_nacional_de_la_Selva_Impenetrable_de_Bwindi%2C_Uganda%2C_2024-05-24%2C_DD_16.jpg",
+    features: ["Munyangange river views", "Stone fireplaces", "Gourmet dining", "Gorilla briefing access"],
+    description: "Perched along the pristine Munyanga River, offering panoramic views of primeval rainforest canopies. Walking distance to the Buhoma gorilla trekking departure headquarters."
+  },
+  {
+    name: "The Sands at Nomad & Beach Resort",
+    destination: "Diani Beach Coast",
+    country: "Kenya",
+    tier: "5-Star Beach Resort",
+    priceRange: "$260 – $490 / night",
+    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Diani_Beach_towards_the_north_1.jpg/1280px-Diani_Beach_towards_the_north_1.jpg",
+    features: ["Private white sand beach", "Forest indigenous canopy", "PADI dive center", "Oceanfront dining"],
+    description: "Surrounded by 26 acres of indigenous coastal forest and marine sanctuary, blending barefoot Swahili luxury with world-class water sports, diving, and fresh seafood dining."
+  }
+];
+---
+
+<Layout
+  title="Luxury Safari Lodges & Hotel Bookings | Bliss Path Tours & Safaris"
+  description="Book handpicked luxury safari lodges, tented camps, and beachfront resorts across Kenya, Tanzania, and Uganda with Bliss Path Tours & Safaris."
+>
+  <Header />
+
+  <main class="bg-[#FDFBF7] min-h-screen pb-20">
+    
+    <!-- Hero Header -->
+    <div class="relative py-20 bg-gradient-to-r from-[#094423] via-[#0F6B38] to-[#121814] text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <span class="inline-block px-3 py-1 rounded-full bg-[#FFAE19] text-[#094423] text-xs font-bold uppercase tracking-wider mb-4">
+          Vetted Accommodations
+        </span>
+        <h1 class="text-4xl sm:text-6xl font-bold font-serif-luxury tracking-tight leading-tight">
+          Safari Lodges & Hotel Booking
+        </h1>
+        <p class="mt-4 text-base sm:text-xl text-slate-200 font-light max-w-2xl mx-auto leading-relaxed">
+          From 5-star canvas suites overlooking the Mara migration to serene oceanfront resorts in Diani and rainforest lodges in Bwindi. We negotiate direct operator rates for your stay.
+        </p>
+      </div>
+    </div>
+
+    <!-- Lodges Showcase Grid -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10">
+        <div>
+          <span class="text-xs font-bold text-[#E86A17] uppercase tracking-widest block mb-1">Exclusive Partnerships</span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-[#1E2621]">Featured Luxury Lodges & Camps</h2>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-500 mt-2 sm:mt-0">All accommodations inspected for safety, eco-conservation & culinary excellence</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {lodges.map((lodge) => (
+          <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col justify-between group">
+            <div class="relative h-60 overflow-hidden">
+              <img
+                src={lodge.image}
+                alt={lodge.name}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+              
+              <div class="absolute top-4 left-4 flex gap-1.5">
+                <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-[#0F6B38] text-white shadow-xs">
+                  {lodge.country}
+                </span>
+                <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-[#E86A17] text-white shadow-xs">
+                  {lodge.tier}
+                </span>
+              </div>
+
+              <div class="absolute bottom-3 left-4 right-4 text-white text-xs">
+                <span class="font-bold text-[#FFAE19] block">{lodge.destination}</span>
+              </div>
+            </div>
+
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <h3 class="text-xl font-bold text-[#1E2621] group-hover:text-[#0F6B38] transition-colors">
+                  {lodge.name}
+                </h3>
+                <p class="text-xs sm:text-sm text-gray-600 mt-2.5 leading-relaxed font-light">
+                  {lodge.description}
+                </p>
+
+                <!-- Features list -->
+                <div class="mt-4 flex flex-wrap gap-1.5">
+                  {lodge.features.map((f) => (
+                    <span class="text-[11px] font-medium px-2.5 py-1 rounded-md bg-gray-50 text-[#0F6B38] border border-gray-100">
+                      ✓ {f}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                <div>
+                  <span class="block text-[10px] uppercase text-gray-400 font-bold">Estimated Rate</span>
+                  <span class="text-sm sm:text-base font-black text-[#0F6B38]">{lodge.priceRange}</span>
+                </div>
+
+                <a
+                  href={`#lodge-inquiry?lodge=${encodeURIComponent(lodge.name)}`}
+                  class="px-4 py-2 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#E86A17] to-[#FFAE19] hover:brightness-105 active:scale-95 shadow-sm transition-all"
+                >
+                  Inquire Lodge
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Hotel Reservation Inquiry Form -->
+      <div id="lodge-inquiry" class="mt-20 bg-white rounded-3xl p-6 sm:p-12 shadow-xl border border-gray-100 max-w-4xl mx-auto">
+        <div class="text-center mb-8">
+          <span class="text-xs font-bold uppercase tracking-wider text-[#0F6B38]">Direct Reservation Desk</span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-[#1E2621] mt-1">Book or Inquire About Any Lodge</h2>
+          <p class="text-xs sm:text-sm text-gray-600 mt-2 max-w-lg mx-auto">
+            Looking for a specific camp or need recommendations for your travel dates? Our safari reservation team books directly with lodges at preferred operator rates.
+          </p>
+        </div>
+
+        <form id="hotel-form" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Your Name *</label>
+              <input type="text" required placeholder="Full Name" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Email Address *</label>
+              <input type="email" required placeholder="name@example.com" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">WhatsApp / Phone *</label>
+              <input type="tel" required placeholder="0741319503" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Destination / Park</label>
+              <select class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50 cursor-pointer">
+                <option>Masai Mara (Kenya)</option>
+                <option>Serengeti (Tanzania)</option>
+                <option>Amboseli (Kenya)</option>
+                <option>Bwindi Gorillas (Uganda)</option>
+                <option>Diani Beach (Kenya)</option>
+                <option>Zanzibar Island (Tanzania)</option>
+                <option>Nairobi City Hotel</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Accommodation Tier</label>
+              <select class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50 cursor-pointer">
+                <option>Luxury Tented Camp</option>
+                <option>Mid-Range Classic Lodge</option>
+                <option>Ultra-Luxury 5-Star</option>
+                <option>Beachfront Resort</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Dates & Special Requirements</label>
+            <textarea rows="3" placeholder="e.g. Check-in August 10, Check-out August 14, 2 adults, 1 king room with savannah view..." class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50"></textarea>
+          </div>
+
+          <button type="submit" class="w-full py-4 rounded-full bg-gradient-to-r from-[#E86A17] via-[#F38218] to-[#FFAE19] text-white font-bold text-sm shadow-md hover:brightness-105 active:scale-98 transition-all cursor-pointer">
+            Request Lodge Availability & Rates
+          </button>
+
+          <div id="hotel-success" class="hidden p-4 rounded-xl bg-green-50 border border-green-200 text-green-800 text-xs sm:text-sm text-center font-medium">
+            ✓ Lodge booking request received! Our reservations manager will contact you with availability and discounted rates within 24 hours.
+          </div>
+        </form>
+
+        <div class="mt-8 pt-6 border-t border-gray-100 flex flex-wrap items-center justify-between gap-4 text-xs text-gray-500">
+          <span>Need immediate assistance? Call <strong>0741319503</strong> / <strong>0721573509</strong></span>
+          <a href="https://wa.me/254741319503?text=Hello%20Bliss%20Path,%20I%20want%20to%20inquire%20about%20a%20safari%20lodge%20booking" target="_blank" rel="noopener noreferrer" class="font-bold text-[#0F6B38] hover:text-[#E86A17]">
+            WhatsApp Lodge Specialist →
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  const form = document.getElementById('hotel-form');
+  const success = document.getElementById('hotel-success');
+  if (form && success) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      success.classList.remove('hidden');
+      form.querySelector('button[type="submit"]')?.setAttribute('disabled', 'true');
+    });
+  }
+</script>

@@ -1,0 +1,257 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const flightRoutes = [
+  {
+    from: "Nairobi (Wilson Airport - WIL)",
+    to: "Masai Mara Airstrips (Musiara, Ol Kiombo, Mara North)",
+    duration: "45 Minutes",
+    frequency: "Multiple Daily Flights",
+    priceEst: "From $210 one-way",
+    airlines: "Safarilink / Airkenya",
+    desc: "Skip the 5-hour drive and soar above the Great Rift Valley directly onto the golden Mara savannah for your morning game drive."
+  },
+  {
+    from: "Nairobi (Wilson Airport - WIL)",
+    to: "Amboseli Airstrip (ASV)",
+    duration: "40 Minutes",
+    frequency: "Daily Scheduled Flights",
+    priceEst: "From $190 one-way",
+    airlines: "Safarilink / Mombasa Air Safari",
+    desc: "Fly directly beneath the snows of Mount Kilimanjaro with immediate transfer into your luxury Amboseli lodge."
+  },
+  {
+    from: "Nairobi (WIL) or Masai Mara",
+    to: "Ukunda / Diani Beach Airstrip (UKA)",
+    duration: "1 Hour 15 Mins",
+    frequency: "Daily Flights",
+    priceEst: "From $180 one-way",
+    airlines: "Safarilink / Fly540 / Jambojet",
+    desc: "Seamless bush-to-beach connection. Depart your morning game drive in the Mara and step onto the white sands of Diani by lunchtime."
+  },
+  {
+    from: "Arusha (ARK) / Kilimanjaro (JRO)",
+    to: "Serengeti Airstrips (Seronera, Kogatende)",
+    duration: "50 Minutes",
+    frequency: "Daily Flights",
+    priceEst: "From $260 one-way",
+    airlines: "Coastal Aviation / Auric Air",
+    desc: "Aerial views over the Ngorongoro Highlands and direct arrival into the predator-rich heart of the Serengeti."
+  },
+  {
+    from: "Serengeti (SEU) / Arusha",
+    to: "Zanzibar International Airport (ZNZ)",
+    duration: "1 Hour 45 Mins",
+    frequency: "Daily Scheduled Flights",
+    priceEst: "From $320 one-way",
+    airlines: "Coastal Aviation / Flightlink",
+    desc: "Connect from dusty game tracks to the exotic spice island of Zanzibar with direct airstrip-to-beach efficiency."
+  },
+  {
+    from: "Entebbe International Airport (EBB)",
+    to: "Kihihi / Kisoro Airstrips (Bwindi Gorillas)",
+    duration: "1 Hour 10 Mins",
+    frequency: "Morning & Afternoon Flights",
+    priceEst: "From $290 one-way",
+    airlines: "Aerolink Uganda",
+    desc: "Save 9 hours of arduous road driving. Fly directly into the mist-covered foothills of Bwindi for gorilla trekking."
+  }
+];
+---
+
+<Layout
+  title="Safari Flights & Bush Air Charters | Bliss Path Tours & Safaris"
+  description="Book scheduled safari bush flights, private air charters, and domestic transfers across Kenya, Tanzania, and Uganda with Bliss Path Tours & Safaris."
+>
+  <Header />
+
+  <main class="bg-[#FDFBF7] min-h-screen pb-20">
+    
+    <!-- Hero Header -->
+    <div class="relative py-20 bg-gradient-to-r from-[#094423] via-[#0F6B38] to-[#121814] text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <span class="inline-block px-3 py-1 rounded-full bg-[#FFAE19] text-[#094423] text-xs font-bold uppercase tracking-wider mb-4">
+          Aviation & Bush Charters
+        </span>
+        <h1 class="text-4xl sm:text-6xl font-bold font-serif-luxury tracking-tight leading-tight">
+          Safari Flight Booking & Air Charters
+        </h1>
+        <p class="mt-4 text-base sm:text-xl text-slate-200 font-light max-w-2xl mx-auto leading-relaxed">
+          Fly between the world's most remote safari airstrips in 45 minutes. We arrange scheduled bush flights, private aircraft charters, coastal transfers, and airport meet-and-greet services.
+        </p>
+      </div>
+    </div>
+
+    <!-- Popular Routes Grid -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10">
+        <div>
+          <span class="text-xs font-bold text-[#E86A17] uppercase tracking-widest block mb-1">Connecting East Africa</span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-[#1E2621]">Popular Safari Bush Flight Routes</h2>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-500 mt-2 sm:mt-0">Partnered with Safarilink, Airkenya, Coastal Aviation, Auric Air & Aerolink</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {flightRoutes.map((route) => (
+          <div class="bg-white rounded-3xl p-6 sm:p-7 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center justify-between text-xs text-gray-400 font-bold mb-4">
+                <span class="px-2.5 py-1 rounded-full bg-[#0F6B38]/10 text-[#0F6B38]">⏱ {route.duration}</span>
+                <span>{route.frequency}</span>
+              </div>
+
+              <!-- Route title -->
+              <div class="space-y-1">
+                <div class="text-xs uppercase tracking-wider font-semibold text-gray-400">Departure:</div>
+                <div class="text-sm font-bold text-[#1E2621]">{route.from}</div>
+                <div class="py-1 text-center text-[#E86A17] text-lg font-bold">↓</div>
+                <div class="text-xs uppercase tracking-wider font-semibold text-gray-400">Arrival:</div>
+                <div class="text-base font-extrabold text-[#0F6B38]">{route.to}</div>
+              </div>
+
+              <p class="text-xs sm:text-sm text-gray-600 mt-4 leading-relaxed font-light">
+                {route.desc}
+              </p>
+
+              <div class="mt-4 pt-3 border-t border-gray-50 text-[11px] text-gray-500">
+                Operating carriers: <strong class="text-gray-700">{route.airlines}</strong>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+              <div>
+                <span class="block text-[10px] uppercase text-gray-400 font-bold">Estimated Fare</span>
+                <span class="text-base font-black text-[#0F6B38]">{route.priceEst}</span>
+              </div>
+
+              <a
+                href={`#flight-inquiry?route=${encodeURIComponent(route.to)}`}
+                class="px-4 py-2 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#E86A17] to-[#FFAE19] hover:brightness-105 active:scale-95 shadow-sm transition-all"
+              >
+                Inquire Flight
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Flight Reservation Form -->
+      <div id="flight-inquiry" class="mt-20 bg-white rounded-3xl p-6 sm:p-12 shadow-xl border border-gray-100 max-w-4xl mx-auto">
+        <div class="text-center mb-8">
+          <span class="text-xs font-bold uppercase tracking-wider text-[#0F6B38]">Aviation Desk</span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-[#1E2621] mt-1">Book or Request a Flight Quote</h2>
+          <p class="text-xs sm:text-sm text-gray-600 mt-2 max-w-lg mx-auto">
+            Whether you need scheduled bush flights to the Mara or a private aircraft charter for your family, our flight ticketing team coordinates your connections smoothly.
+          </p>
+        </div>
+
+        <form id="flight-form" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Your Full Name *</label>
+              <input type="text" required placeholder="Full Name" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Email Address *</label>
+              <input type="email" required placeholder="name@example.com" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">WhatsApp / Phone *</label>
+              <input type="tel" required placeholder="0741319503" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Departure Location</label>
+              <select class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50 cursor-pointer">
+                <option>Nairobi (Wilson Airport - WIL)</option>
+                <option>Nairobi (Jomo Kenyatta - NBO)</option>
+                <option>Masai Mara Airstrip</option>
+                <option>Amboseli Airstrip</option>
+                <option>Ukunda / Diani Beach</option>
+                <option>Arusha / Kilimanjaro</option>
+                <option>Serengeti Airstrip</option>
+                <option>Zanzibar Island (ZNZ)</option>
+                <option>Entebbe Airport (Uganda)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Arrival Destination</label>
+              <select class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50 cursor-pointer">
+                <option>Masai Mara Airstrip (Kenya)</option>
+                <option>Ukunda / Diani Beach (Kenya)</option>
+                <option>Amboseli Airstrip (Kenya)</option>
+                <option>Serengeti Airstrip (Tanzania)</option>
+                <option>Zanzibar Island (Tanzania)</option>
+                <option>Kihihi / Kisoro (Bwindi Gorillas, Uganda)</option>
+                <option>Nairobi (Wilson Airport)</option>
+                <option>Mombasa (MBA)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Travel Date</label>
+              <input type="date" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50 cursor-pointer" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Passengers</label>
+              <select class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50 cursor-pointer">
+                <option>1 Passenger</option>
+                <option selected>2 Passengers</option>
+                <option>3 - 5 Passengers</option>
+                <option>6+ Passengers (Private Charter)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Flight Type</label>
+              <select class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F6B38] bg-gray-50 cursor-pointer">
+                <option>Scheduled Bush Flight</option>
+                <option>Private Aircraft Charter</option>
+                <option>One-Way Flight</option>
+                <option>Round-Trip Flight</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full py-4 rounded-full bg-gradient-to-r from-[#E86A17] via-[#F38218] to-[#FFAE19] text-white font-bold text-sm shadow-md hover:brightness-105 active:scale-98 transition-all cursor-pointer">
+            Request Flight Seats & Live Rates
+          </button>
+
+          <div id="flight-success" class="hidden p-4 rounded-xl bg-green-50 border border-green-200 text-green-800 text-xs sm:text-sm text-center font-medium">
+            ✓ Flight request received! Our air travel coordinator will verify seat availability and send you ticket options within 12 hours.
+          </div>
+        </form>
+
+        <div class="mt-8 pt-6 border-t border-gray-100 flex flex-wrap items-center justify-between gap-4 text-xs text-gray-500">
+          <span>Need immediate flight confirmation? Call <strong>0741319503</strong> / <strong>0721573509</strong></span>
+          <a href="https://wa.me/254741319503?text=Hello%20Bliss%20Path,%20I%20want%20to%20inquire%20about%20safari%20bush%20flights" target="_blank" rel="noopener noreferrer" class="font-bold text-[#0F6B38] hover:text-[#E86A17]">
+            WhatsApp Flight Coordinator →
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  const form = document.getElementById('flight-form');
+  const success = document.getElementById('flight-success');
+  if (form && success) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      success.classList.remove('hidden');
+      form.querySelector('button[type="submit"]')?.setAttribute('disabled', 'true');
+    });
+  }
+</script>
