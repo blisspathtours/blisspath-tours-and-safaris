@@ -8,6 +8,20 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
 
+    // Ensure /sitemap.xml and /sitemap-index.xml serve the complete full URL list directly
+    if (url.pathname === '/sitemap.xml' || url.pathname === '/sitemap-index.xml') {
+      const sitemapRes = await env.ASSETS.fetch(new Request(new URL('/sitemap-0.xml', request.url)));
+      if (sitemapRes.ok) {
+        return new Response(sitemapRes.body, {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/xml; charset=utf-8',
+            'Cache-Control': 'public, max-age=3600'
+          }
+        });
+      }
+    }
+
     // Handle Form Submissions: /api/inquiry
     if (url.pathname === '/api/inquiry' && request.method === 'POST') {
       try {
@@ -61,7 +75,6 @@ export default {
 
         // 1. Try sending via Resend with configured API key
         if (apiKey) {
-          // Attempt 1: from inquiries@blisspathtours.com (verified custom domain)
           let resendRes = await fetch('https://api.resend.com/emails', {
             method: 'POST',
             headers: {

@@ -69,5 +69,6 @@ User-agent: FacebookBot
 Allow: /
 
 # Sitemaps
+Sitemap: https://blisspathtours.com/sitemap.xml
 Sitemap: https://blisspathtours.com/sitemap-index.xml
 Sitemap: https://blisspathtours.com/sitemap-0.xml
