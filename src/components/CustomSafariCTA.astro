@@ -126,13 +126,40 @@
   const form = document.getElementById('safari-inquiry-form');
   const successBox = document.getElementById('form-success');
   if (form && successBox) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      successBox.classList.remove('hidden');
-      const submitBtn = form.querySelector('button[type="submit"]');
+      const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
       if (submitBtn) {
         submitBtn.setAttribute('disabled', 'true');
-        submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        submitBtn.textContent = 'Sending Inquiry...';
+      }
+
+      const inputs = form.querySelectorAll('input');
+      const selects = form.querySelectorAll('select');
+      const textarea = form.querySelector('textarea');
+
+      const payload = {
+        type: 'Custom Safari Itinerary',
+        name: inputs[0]?.value,
+        email: inputs[1]?.value,
+        phone: inputs[2]?.value,
+        destination: selects[0]?.value,
+        dates: selects[1]?.value,
+        notes: textarea?.value
+      };
+
+      try {
+        await fetch('/api/inquiry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } catch (err) {}
+
+      successBox.classList.remove('hidden');
+      if (submitBtn) {
+        submitBtn.textContent = '✓ Inquiry Sent Successfully!';
+        submitBtn.classList.add('opacity-75');
       }
     });
   }

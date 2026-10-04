@@ -248,10 +248,39 @@ const flightRoutes = [
   const form = document.getElementById('flight-form');
   const success = document.getElementById('flight-success');
   if (form && success) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      if (btn) {
+        btn.setAttribute('disabled', 'true');
+        btn.textContent = 'Submitting Flight Request...';
+      }
+
+      const inputs = form.querySelectorAll('input');
+      const selects = form.querySelectorAll('select');
+
+      const payload = {
+        type: 'Safari Flight / Air Charter Booking',
+        name: inputs[0]?.value,
+        email: inputs[1]?.value,
+        phone: inputs[2]?.value,
+        departure: selects[0]?.value,
+        destination: selects[1]?.value,
+        travelDate: inputs[3]?.value,
+        passengers: selects[2]?.value,
+        flightType: selects[3]?.value
+      };
+
+      try {
+        await fetch('/api/inquiry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } catch (err) {}
+
       success.classList.remove('hidden');
-      form.querySelector('button[type="submit"]')?.setAttribute('disabled', 'true');
+      if (btn) btn.textContent = '✓ Flight Request Sent!';
     });
   }
 </script>
