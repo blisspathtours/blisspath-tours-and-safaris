@@ -59,9 +59,10 @@ export default {
           </div>
         `;
 
-        // 1. Try sending via Resend if API key is present
+        // 1. Try sending via Resend with configured API key
         if (apiKey) {
-          const resendRes = await fetch('https://api.resend.com/emails', {
+          // Attempt 1: from inquiries@blisspathtours.com (verified custom domain)
+          let resendRes = await fetch('https://api.resend.com/emails', {
             method: 'POST',
             headers: {
               'Authorization': `Bearer ${apiKey}`,
@@ -76,8 +77,27 @@ export default {
             })
           });
 
+          // Attempt 2: If custom domain is pending verification, fallback to onboarding@resend.dev
+          if (!resendRes.ok) {
+            resendRes = await fetch('https://api.resend.com/emails', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                from: 'Bliss Path Safaris <onboarding@resend.dev>',
+                to: [recipient],
+                reply_to: data.email || undefined,
+                subject,
+                html: htmlContent
+              })
+            });
+          }
+
           if (resendRes.ok) {
-            return new Response(JSON.stringify({ success: true, provider: 'resend' }), {
+            const resendData = await resendRes.json() as Record<string, any>;
+            return new Response(JSON.stringify({ success: true, provider: 'resend', id: resendData.id }), {
               status: 200,
               headers: { 'Content-Type': 'application/json' }
             });
@@ -89,7 +109,7 @@ export default {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            access_key: 'c9f0294e-d636-47a3-8ce0-5c62df508b5e', // Default public delivery token for blisspathtourssafaris@gmail.com
+            access_key: 'c9f0294e-d636-47a3-8ce0-5c62df508b5e',
             subject,
             from_name: 'Bliss Path Safari Website',
             to_email: recipient,
