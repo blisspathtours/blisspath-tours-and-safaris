@@ -2,6 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
+
+import maraSopaImg from '../assets/hotels/mara-sopa-lodge.webp';
+import olTukaiImg from '../assets/hotels/ol-tukai-lodge.webp';
+import kubuKubuImg from '../assets/hotels/kubu-kubu-tented-lodge.webp';
+import ngorongoroSerenaImg from '../assets/hotels/ngorongoro-serena-lodge.webp';
+import mahoganySpringsImg from '../assets/hotels/mahogany-springs-lodge.webp';
+import sandsNomadImg from '../assets/hotels/sands-at-nomad-resort.webp';
 
 const lodges = [
   {
@@ -10,7 +18,7 @@ const lodges = [
     country: "Kenya",
     tier: "Classic Luxury",
     priceRange: "$280 – $420 / night",
-    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/17/Masai_Mara_at_Sunset.jpg/1280px-Masai_Mara_at_Sunset.jpg",
+    image: maraSopaImg,
     features: ["Swimming pool", "Ensuite cottages", "Savannah sunset deck", "Full board dining"],
     description: "Nestled in the Oloolaimutia Hills of the eastern Masai Mara, featuring traditional round African rondavel architecture, lush gardens, and regular visits from grazing gazelles and elephants."
   },
@@ -20,7 +28,7 @@ const lodges = [
     country: "Kenya",
     tier: "Safari Elegance",
     priceRange: "$310 – $480 / night",
-    image: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Elephants_at_Amboseli_national_park_against_Mount_Kilimanjaro.jpg",
+    image: olTukaiImg,
     features: ["Direct Kilimanjaro views", "Elephant swamp proximity", "Swimming pool", "Outdoor bar"],
     description: "One of the best vantage points in Africa to view wild elephant herds feeding in the marshes directly against the dramatic snow-capped summit of Mount Kilimanjaro."
   },
@@ -30,7 +38,7 @@ const lodges = [
     country: "Tanzania",
     tier: "Ultra-Luxury Tented",
     priceRange: "$450 – $750 / night",
-    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/004_Sunrise_at_Serengeti.jpg/1280px-004_Sunrise_at_Serengeti.jpg",
+    image: kubuKubuImg,
     features: ["Infinity pool", "Elevated hardwood decks", "360° Serengeti plains view", "Gourmet cuisine"],
     description: "Strategically located in the central Seronera region with sweeping views of the Serengeti plains. Ideal year-round base for prime predator tracking and wildebeest migration herds."
   },
@@ -40,7 +48,7 @@ const lodges = [
     country: "Tanzania",
     tier: "Crater Luxury",
     priceRange: "$490 – $820 / night",
-    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Cr%C3%A1ter_volc%C3%A1nico_de_Ngorongoro%2C_Tanzania%2C_2024-05-22%2C_DD_10.jpg/1280px-Cr%C3%A1ter_volc%C3%A1nico_de_Ngorongoro%2C_Tanzania%2C_2024-05-22%2C_DD_10.jpg",
+    image: ngorongoroSerenaImg,
     features: ["Perched 600m above crater floor", "River stone architecture", "Panoramic balconies", "Maasai dancers"],
     description: "Engineered from indigenous river stone and clinged seamlessly to the forested volcanic crater rim, offering private balconies looking directly down into the 260-sq-km wildlife caldera."
   },
@@ -50,8 +58,8 @@ const lodges = [
     country: "Uganda",
     tier: "Eco-Boutique Luxury",
     priceRange: "$350 – $560 / night",
-    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ec/Gorila_de_monta%C3%B1a_%28Gorilla_beringei_beringei%29%2C_parque_nacional_de_la_Selva_Impenetrable_de_Bwindi%2C_Uganda%2C_2024-05-24%2C_DD_16.jpg/1280px-Gorila_de_monta%C3%B1a_%28Gorilla_beringei_beringei%29%2C_parque_nacional_de_la_Selva_Impenetrable_de_Bwindi%2C_Uganda%2C_2024-05-24%2C_DD_16.jpg",
-    features: ["Munyangange river views", "Stone fireplaces", "Gourmet dining", "Gorilla briefing access"],
+    image: mahoganySpringsImg,
+    features: ["Munyanga river views", "Stone fireplaces", "Gourmet dining", "Gorilla briefing access"],
     description: "Perched along the pristine Munyanga River, offering panoramic views of primeval rainforest canopies. Walking distance to the Buhoma gorilla trekking departure headquarters."
   },
   {
@@ -60,7 +68,7 @@ const lodges = [
     country: "Kenya",
     tier: "5-Star Beach Resort",
     priceRange: "$260 – $490 / night",
-    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Diani_Beach_towards_the_north_1.jpg/1280px-Diani_Beach_towards_the_north_1.jpg",
+    image: sandsNomadImg,
     features: ["Private white sand beach", "Forest indigenous canopy", "PADI dive center", "Oceanfront dining"],
     description: "Surrounded by 26 acres of indigenous coastal forest and marine sanctuary, blending barefoot Swahili luxury with world-class water sports, diving, and fresh seafood dining."
   }
@@ -105,9 +113,13 @@ const lodges = [
         {lodges.map((lodge) => (
           <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col justify-between group">
             <div class="relative h-60 overflow-hidden">
-              <img
+              <Image
                 src={lodge.image}
                 alt={lodge.name}
+                widths={[640, 1024]}
+                sizes="(max-width: 768px) 100vw, 33vw"
+                format="webp"
+                quality={88}
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
               />
@@ -250,7 +262,8 @@ const lodges = [
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       success.classList.remove('hidden');
-      form.querySelector('button[type="submit"]')?.setAttribute('disabled', 'true');
+      const btn = form.querySelector('button[type="submit"]');
+      if (btn) btn.setAttribute('disabled', 'true');
     });
   }
 </script>
