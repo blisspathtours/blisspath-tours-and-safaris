@@ -75,8 +75,8 @@ npx wrangler deploy
 ---
 
 ## 🦁 Contact & Licensing
-- **Headquarters**: Karen Plains Road, Nairobi, Kenya
-- **Phone / WhatsApp**: +254 700 000 000
+- **Headquarters**: Outering Road, next to Quickmart, Embakasi, Nairobi, Kenya
+- **Phone / WhatsApp**: 0741319503 / 0721573509
 - **Email**: info@blisspathtours.com
 - **Accreditations**: Licensed by Tourism Regulatory Authority (TRA/KEN), Member of Kenya Association of Tour Operators (KATO), EcoTourism Kenya Partner.
 
